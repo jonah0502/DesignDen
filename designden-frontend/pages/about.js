@@ -1,7 +1,13 @@
+import Link from 'next/link'
+import Layout from '../components/Layout'
+
+
 export default function AboutPage() {
     return (
-        <div>
+        <Layout title="About DesignDen">
             <h1>About</h1>
-        </div>
+            <p>This is an app to sell and buy website designs.</p>
+            <Link href='/'>Home</Link>
+        </Layout>
     )
 }
