@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container input, .container button {
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 40%;
+}
+
+.dateInput {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+}
+
+.dateInput input{
+    width: 60%;
+    margin-left: 5px;
+}
+
+.container button {
+    background: steelblue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.container button:hover {
+    cursor: pointer;
+}
+
+.formFooter {
+    display: flex;
+    flex-direction: row;
+}
+
+.formFooter p, .formFooter a {
+    margin: 0px 5px;
+}
