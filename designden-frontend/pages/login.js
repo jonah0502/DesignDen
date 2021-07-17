@@ -17,7 +17,7 @@ export default function LoginPage() {
         <button type="submit">Login</button>
         <div className={styles.loginFooter}>
           <p>Don&apos;t have an account? </p>
-          <Link href="/account">Sign Up</Link>
+          <Link href="/signup">Sign Up</Link>
         </div>
       </form>
     </Layout>
