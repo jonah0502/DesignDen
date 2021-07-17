@@ -11,6 +11,19 @@
     width: 40%;
 }
 
+.dateInput {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+}
+
+.dateInput input{
+    width: 60%;
+    margin-left: 5px;
+}
+
 .container button {
     background: steelblue;
     color: white;
@@ -22,11 +35,11 @@
     cursor: pointer;
 }
 
-.loginFooter {
+.formFooter {
     display: flex;
     flex-direction: row;
 }
 
-.loginFooter p, .loginFooter a {
+.formFooter p, .formFooter a {
     margin: 0px 5px;
 }
