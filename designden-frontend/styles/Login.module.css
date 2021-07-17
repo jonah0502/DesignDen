@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container input, .container button {
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 40%;
+}
+
+.container button {
+    background: steelblue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.container button:hover {
+    cursor: pointer;
+}
+
+.loginFooter {
+    display: flex;
+    flex-direction: row;
+}
+
+.loginFooter p, .loginFooter a {
+    margin: 0px 5px;
+}

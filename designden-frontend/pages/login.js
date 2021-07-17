@@ -1,21 +1,24 @@
 import Link from "next/link";
 import Layout from "@/components/Layout";
+import styles from "../styles/Login.module.css";
 
 export default function LoginPage() {
   return (
     <Layout title="Login">
-      <h1>Login</h1>
-      <form>
-        <div>
-          <label htmlFor="email">Email: </label>
-          <input type="email" id="email" name="email" />
-        </div>
-        <div>
-          <label htmlFor="password">Password: </label>
-          <input type="text" id="password" name="password" />
-        </div>
+      <form className={styles.container}>
+        <h1>Login</h1>
+        <input type="email" id="email" name="email" placeholder="Email" />
+        <input
+          type="text"
+          id="password"
+          name="password"
+          placeholder="Password"
+        />
         <button type="submit">Login</button>
-        <Link href="/account">Create Account</Link>
+        <div className={styles.loginFooter}>
+          <p>Don&apos;t have an account? </p>
+          <Link href="/account">Sign Up</Link>
+        </div>
       </form>
     </Layout>
   );
