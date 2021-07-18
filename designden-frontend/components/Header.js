@@ -17,6 +17,11 @@ export default function Header() {
             </Link>
           </li>
           <li>
+            <Link href="/checkout">
+              <a>Checkout</a>
+            </Link>
+          </li>
+          <li>
             <Link href="/login">
               <a>Login</a>
             </Link>
@@ -26,4 +31,3 @@ export default function Header() {
     </header>
   );
 }
-
