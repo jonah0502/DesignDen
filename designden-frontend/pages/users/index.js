@@ -35,6 +35,22 @@ const usersData = [
     birthdate: new Date(1985, 2, 27).toISOString().split("T")[0],
     storeCredits: 0,
   },
+  {
+    id: 3,
+    firstName: "David",
+    lastName: "Kim",
+    email: "dkim@example.com",
+    birthdate: new Date(1992, 11, 12).toISOString().split("T")[0],
+    storeCredits: 40,
+  },
+  {
+    id: 4,
+    firstName: "Eve",
+    lastName: "Walker",
+    email: "ewalker@example.com",
+    birthdate: new Date(1997, 7, 14).toISOString().split("T")[0],
+    storeCredits: 400,
+  },
 ];
 
 export default function UsersPage() {
