@@ -11,6 +11,7 @@ export default function HomePage() {
       </Head>
       <h1>Home</h1>
       <Link href="/index">Index</Link>
+      <br />
       <Link href="/about">About</Link>
     </Layout>
   );
