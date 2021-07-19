@@ -36,6 +36,14 @@ const tagData = [
 
 export default function TagsPage() {
   const [tags, setTags] = useState(tagData);
+  const [tagInput, setTagInput] = useState("");
+
+  const handleRowAdd = (event) => {
+    event.preventDefault();
+    const newID = Math.max(...tags.map((tag) => tag.id)) + 1;
+    console.log(newID);
+    setTags(tags.concat({ id: newID, tagName: tagInput }));
+  };
 
   const handleRowChange = (index) => (event) => {
     const { name, value } = event.target;
@@ -48,6 +56,10 @@ export default function TagsPage() {
     const newTags = [...tags];
     newTags.splice(index, 1);
     setTags(newTags);
+  };
+
+  const handleTagChange = (event) => {
+    setTagInput(event.target.value);
   };
 
   return (
@@ -83,6 +95,16 @@ export default function TagsPage() {
           ))}
         </tbody>
       </table>
+      <br />
+      <form onSubmit={handleRowAdd}>
+        <input
+          type="text"
+          placeholder="TagName"
+          value={tagInput}
+          onChange={handleTagChange}
+        />
+        <button type="submit">Add</button>
+      </form>
     </Layout>
   );
 }
