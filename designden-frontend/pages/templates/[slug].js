@@ -34,6 +34,8 @@ export default function TemplatePage({ tmp }) {
               src={tmp.image}
               width={960}
               height={600}
+              priority={true}
+              loading="eager"
             />
           </div>
         )}

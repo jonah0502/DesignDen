@@ -14,6 +14,8 @@ export default function TemplateItem({ tmp }) {
           }
           width={170}
           height={100}
+          priority={true}
+          loading="eager"
         />
       </div>
 
