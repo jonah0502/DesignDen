@@ -16,9 +16,6 @@ export default function IndexPage() {
         <li>
           <Link href="/templates/add">Add Product</Link>
         </li>
-        <li>
-          <Link href="/templates/[id]">Delete Product</Link>
-        </li>
       </ul>
       <h3>Orders</h3>
       <ul>
@@ -32,43 +29,22 @@ export default function IndexPage() {
       <h3>Users</h3>
       <ul>
         <li>
-          <Link href="/users">View Users</Link>
+          <Link href="/users">View, Edit, or Delete Users</Link>
         </li>
         <li>
           <Link href="/signup">Add User</Link>
-        </li>
-        <li>
-          <Link href="/users/edit">Update User</Link>
-        </li>
-        <li>
-          <Link href="/users/delete">Delete User</Link>
         </li>
       </ul>
       <h3>Reviews</h3>
       <ul>
         <li>
-          <Link href="/reviews">View Reviews</Link>
-        </li>
-        <li>
-          <Link href="/reviews/add">Add Review</Link>
-        </li>
-        <li>
-          <Link href="/reviews/edit">Update Review</Link>
-        </li>
-        <li>
-          <Link href="/reviews/delete">Delete Review</Link>
+          <Link href="/reviews">View, Add, Edit, or Delete Reviews</Link>
         </li>
       </ul>
       <h3>Tags</h3>
       <ul>
         <li>
-          <Link href="/tags">View Tags</Link>
-        </li>
-        <li>
-          <Link href="/tags/add">Add Tag</Link>
-        </li>
-        <li>
-          <Link href="/tags/delete">Delete Tag</Link>
+          <Link href="/tags">View, Add, Edit, or Delete Tags</Link>
         </li>
       </ul>
       <br />
@@ -83,13 +59,9 @@ export default function IndexPage() {
       <h3>Product_Tag</h3>
       <ul>
         <li>
-          <Link href="/product-tags">View Product_Tags</Link>
-        </li>
-        <li>
-          <Link href="/product-tags/add">Add Product_Tag</Link>
-        </li>
-        <li>
-          <Link href="/product-tags/delete">Delete Product_Tag</Link>
+          <Link href="/product-tags">
+            View, Add, Edit, or Delete Product_Tags
+          </Link>
         </li>
       </ul>
     </Layout>
