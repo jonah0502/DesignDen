@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import styles from "@/styles/Table.module.css";
 
 const orderHeaders = [
   "OrderID",
@@ -67,27 +68,29 @@ const orders = [
 export default function OrdersPage() {
   return (
     <Layout>
-      <h1>Orders</h1>
-      <table>
-        <thead>
-          <tr>
-            {orderHeaders.map((header) => {
-              return <th key={header}>{header}</th>;
+      <h1>View Orders</h1>
+      <div className={styles.tableContainer}>
+        <table>
+          <thead>
+            <tr>
+              {orderHeaders.map((header) => {
+                return <th key={header}>{header}</th>;
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => {
+              return (
+                <tr key={order.id}>
+                  {Object.values(order).map((item) => {
+                    return <td key={item}>{item}</td>;
+                  })}
+                </tr>
+              );
             })}
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => {
-            return (
-              <tr key={order.id}>
-                {Object.values(order).map((item) => {
-                  return <td key={item}>{item}</td>;
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </Layout>
   );
 }

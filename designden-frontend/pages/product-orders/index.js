@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import styles from "@/styles/Table.module.css";
 
 const headers = ["OrderID", "ProductID", "Quantity"];
 
@@ -39,24 +40,26 @@ export default function ProductOrdersPage() {
   return (
     <Layout>
       <h1>Products_Orders</h1>
-      <table>
-        <thead>
-          <tr>
-            {headers.map((header) => {
-              return <td key={header}>{header}</td>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <tr key={`${item.orderID}-${item.productID}`}>
-              <td>{item.orderID}</td>
-              <td>{item.productID}</td>
-              <td>{item.quantity}</td>
+      <div className={styles.tableContainer}>
+        <table>
+          <thead>
+            <tr>
+              {headers.map((header) => {
+                return <th key={header}>{header}</th>;
+              })}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((item) => (
+              <tr key={`${item.orderID}-${item.productID}`}>
+                <td>{item.orderID}</td>
+                <td>{item.productID}</td>
+                <td>{item.quantity}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </Layout>
   );
 }

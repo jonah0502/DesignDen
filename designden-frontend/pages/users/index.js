@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import styles from "@/styles/Table.module.css";
 import { useState } from "react";
 
 const userHeaders = [
@@ -8,6 +9,8 @@ const userHeaders = [
   "Email",
   "Birthdate",
   "StoreCredits",
+  "Update",
+  "Delete",
 ];
 
 const usersData = [
@@ -72,68 +75,70 @@ export default function UsersPage() {
   return (
     <Layout>
       <h1>Users</h1>
-      <table>
-        <thead>
-          <tr>
-            {userHeaders.map((header) => {
-              return <td key={header}>{header}</td>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, index) => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={user.firstName}
-                  onChange={handleRowChange(index)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={user.lastName}
-                  onChange={handleRowChange(index)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  name="email"
-                  value={user.email}
-                  onChange={handleRowChange(index)}
-                />
-              </td>
-              <td>
-                <input
-                  type="date"
-                  name="birthdate"
-                  value={user.birthdate}
-                  onChange={handleRowChange(index)}
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  name="storeCredits"
-                  value={user.storeCredits}
-                  onChange={handleRowChange(index)}
-                />
-              </td>
-              <td>
-                <button>Update</button>
-              </td>
-              <td>
-                <button onClick={handleRowDelete(index)}>Delete</button>
-              </td>
+      <div className={styles.tableContainer}>
+        <table>
+          <thead>
+            <tr>
+              {userHeaders.map((header) => {
+                return <th key={header}>{header}</th>;
+              })}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((user, index) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={user.firstName}
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={user.lastName}
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    name="email"
+                    value={user.email}
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="date"
+                    name="birthdate"
+                    value={user.birthdate}
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="storeCredits"
+                    value={user.storeCredits}
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
+                <td>
+                  <button>Update</button>
+                </td>
+                <td>
+                  <button onClick={handleRowDelete(index)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </Layout>
   );
 }

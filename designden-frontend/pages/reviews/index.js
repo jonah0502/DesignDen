@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import styles from "@/styles/Table.module.css";
 import { useState } from "react";
 
 const reviewHeaders = [
@@ -8,6 +9,8 @@ const reviewHeaders = [
   "Stars",
   "Comment",
   "Date",
+  "Update",
+  "Delete",
 ];
 
 const reviewData = [
@@ -64,56 +67,58 @@ export default function ReviewPage() {
   return (
     <Layout>
       <h1>Reviews</h1>
-      <table>
-        <thead>
-          <tr>
-            {reviewHeaders.map((header) => {
-              return <td key={header}>{header}</td>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {reviews.map((review, index) => (
-            <tr key={review.id}>
-              <td>{review.id}</td>
-              <td>{review.productID}</td>
-              <td>{review.userID}</td>
-              <td>
-                <input
-                  type="number"
-                  name="stars"
-                  value={review.stars}
-                  min="1"
-                  max="5"
-                  onChange={handleRowChange(index)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  name="comment"
-                  value={review.comment}
-                  onChange={handleRowChange(index)}
-                />
-              </td>
-              <td>
-                <input
-                  type="date"
-                  name="date"
-                  value={review.date}
-                  onChange={handleRowChange(index)}
-                />
-              </td>
-              <td>
-                <button>Update</button>
-              </td>
-              <td>
-                <button onClick={handleRowDelete(index)}>Delete</button>
-              </td>
+      <div className={styles.tableContainer}>
+        <table>
+          <thead>
+            <tr>
+              {reviewHeaders.map((header) => {
+                return <th key={header}>{header}</th>;
+              })}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {reviews.map((review, index) => (
+              <tr key={review.id}>
+                <td>{review.id}</td>
+                <td>{review.productID}</td>
+                <td>{review.userID}</td>
+                <td>
+                  <input
+                    type="number"
+                    name="stars"
+                    value={review.stars}
+                    min="1"
+                    max="5"
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    name="comment"
+                    value={review.comment}
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="date"
+                    name="date"
+                    value={review.date}
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
+                <td>
+                  <button>Update</button>
+                </td>
+                <td>
+                  <button onClick={handleRowDelete(index)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <br />
       <h3>Add new review</h3>
       <form>

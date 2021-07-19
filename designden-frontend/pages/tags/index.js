@@ -1,7 +1,8 @@
 import Layout from "@/components/Layout";
+import styles from "@/styles/Table.module.css";
 import { useState } from "react";
 
-const tagHeaders = ["TagID", "TagName"];
+const tagHeaders = ["TagID", "TagName", "Update", "Delete"];
 
 const tagData = [
   {
@@ -65,38 +66,41 @@ export default function TagsPage() {
   return (
     <Layout>
       <h1>Tags</h1>
-      <table>
-        <thead>
-          <tr>
-            {tagHeaders.map((header) => {
-              return <td key={header}>{header}</td>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {tags.map((tag, index) => (
-            <tr key={tag.id}>
-              <td>{tag.id}</td>
-              <td>
-                <input
-                  type="text"
-                  name="tagName"
-                  value={tag.tagName}
-                  onChange={handleRowChange(index)}
-                />
-              </td>
-              <td>
-                <button>Update</button>
-              </td>
-              <td>
-                <button onClick={handleRowDelete(index)}>Delete</button>
-              </td>
+      <div className={styles.tableContainer}>
+        <table>
+          <thead>
+            <tr>
+              {tagHeaders.map((header) => {
+                return <th key={header}>{header}</th>;
+              })}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {tags.map((tag, index) => (
+              <tr key={tag.id}>
+                <td>{tag.id}</td>
+                <td>
+                  <input
+                    type="text"
+                    name="tagName"
+                    value={tag.tagName}
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
+                <td>
+                  <button>Update</button>
+                </td>
+                <td>
+                  <button onClick={handleRowDelete(index)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <br />
       <form onSubmit={handleRowAdd}>
+        <h3>Add a new tag</h3>
         <input
           type="text"
           placeholder="TagName"

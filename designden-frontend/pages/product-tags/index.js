@@ -1,7 +1,8 @@
 import Layout from "@/components/Layout";
+import styles from "@/styles/Table.module.css";
 import { useState } from "react";
 
-const headers = ["ProductID", "TagID"];
+const headers = ["ProductID", "TagID", "Update", "Delete"];
 
 const data = [
   {
@@ -76,45 +77,48 @@ export default function ProductTagsPage() {
   return (
     <Layout>
       <h1>Products_Tags</h1>
-      <table>
-        <thead>
-          <tr>
-            {headers.map((header) => {
-              return <td key={header}>{header}</td>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {prodTags.map((p, index) => (
-            <tr key={`${p.productID}-${p.tagID}`}>
-              <td>
-                <input
-                  type="number"
-                  name="productID"
-                  value={p.productID}
-                  onChange={handleRowChange(index)}
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  name="tagID"
-                  value={p.tagID}
-                  onChange={handleRowChange(index)}
-                />
-              </td>
-              <td>
-                <button>Update</button>
-              </td>
-              <td>
-                <button onClick={handleRowDelete(index)}>Delete</button>
-              </td>
+      <div className={styles.tableContainer}>
+        <table>
+          <thead>
+            <tr>
+              {headers.map((header) => {
+                return <th key={header}>{header}</th>;
+              })}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {prodTags.map((p, index) => (
+              <tr key={`${p.productID}-${p.tagID}`}>
+                <td>
+                  <input
+                    type="number"
+                    name="productID"
+                    value={p.productID}
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="tagID"
+                    value={p.tagID}
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
+                <td>
+                  <button>Update</button>
+                </td>
+                <td>
+                  <button onClick={handleRowDelete(index)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <br />
       <form>
+        <h3>Add a tag to a product</h3>
         <input
           type="text"
           placeholder="ProductID"
