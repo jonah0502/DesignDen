@@ -1,19 +1,18 @@
 import Layout from "@/components/Layout";
 import Cart from "@/components/Cart";
+import styles from "@/styles/Form.module.css";
 
 export default function CheckoutPage() {
   return (
     <Layout>
       <h1>Checkout</h1>
       <Cart></Cart>
-      <form>
+      <form className={styles.container}>
         <div>
           <h3>Contact Information</h3>
           <input type="text" placeholder="First Name" />
           <input type="text" placeholder="Last Name" />
           <input type="email" placeholder="Email" />
-        </div>
-        <div>
           <h3>Billing Address</h3>
           <input type="text" placeholder="Street Address" />
           <input type="text" placeholder="City" />

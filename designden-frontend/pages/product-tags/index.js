@@ -117,7 +117,7 @@ export default function ProductTagsPage() {
         </table>
       </div>
       <br />
-      <form>
+      <form className={styles.formContainer}>
         <h3>Add a tag to a product</h3>
         <input
           type="text"

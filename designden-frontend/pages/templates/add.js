@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import styles from "@/styles/Form.module.css";
 import { useState } from "react";
 
 export default function AddTemplatesPage() {
@@ -19,19 +20,16 @@ export default function AddTemplatesPage() {
   return (
     <Layout title="Add New Template">
       <h1>Add Template</h1>
-      <form>
-        <div>
-          <input type="text" placeholder="Name" />
-          <input type="text" placeholder="Description" />
-          <input type="text" placeholder="Image URL" />
-          <input type="number" placeholder="Price" min="0" step="0.01" />
-        </div>
-        <div>
+      <form className={styles.container}>
+        <input type="text" placeholder="Name" />
+        <input type="text" placeholder="Description" />
+        <input type="text" placeholder="Image URL" />
+        <input type="number" placeholder="Price" min="0" step="0.01" />
+        <div className={styles.tagInput}>
           <input type="text" placeholder="Tag" onChange={handleTagChange} />
           <button onClick={addTag}>Add Tag</button>
-        </div>
-        <div>
           <p>Tags: {tags.join(", ")}</p>
+          <br />
         </div>
         <button>Submit</button>
       </form>

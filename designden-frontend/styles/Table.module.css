@@ -10,7 +10,6 @@ overflow-x: auto;
 .tableContainer table {
     border: 1px solid #ddd;
     border-collapse: collapse;
-    margin: auto;
 }
 
 .tableContainer th, .tableContainer td {
@@ -30,4 +29,25 @@ overflow-x: auto;
 
 .tableContainer input {
     width: 100%;
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 25%;
+    margin: 15px;
+}
+
+.formContainer input, .formContainer textarea {
+    margin: 5px;
+}
+
+.formContainer button {
+    background: steelblue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 30%;
+    margin-left: 10px;
+    padding: 5px 10px;
 }

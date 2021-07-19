@@ -99,7 +99,7 @@ export default function TagsPage() {
         </table>
       </div>
       <br />
-      <form onSubmit={handleRowAdd}>
+      <form className={styles.formContainer} onSubmit={handleRowAdd}>
         <h3>Add a new tag</h3>
         <input
           type="text"

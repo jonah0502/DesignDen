@@ -121,12 +121,16 @@ export default function ReviewPage() {
       </div>
       <br />
       <h3>Add new review</h3>
-      <form>
-        <input type="text" placeholder="ProductID" />
-        <input type="text" placeholder="UserID" />
-        <input type="number" min="0" max="5" placeholder="Stars" />
-        <input type="textarea" placeholder="Comment" />
-        <button>Add</button>
+      <form className={styles.formContainer}>
+        <div className={styles.inputContainer}>
+          <input type="text" placeholder="ProductID" />
+          <input type="text" placeholder="UserID" />
+          <input type="number" min="0" max="5" placeholder="Stars" />
+          <textarea placeholder="Comment" rows="3" cols="50" />
+        </div>
+        <div>
+          <button>Add</button>
+        </div>
       </form>
     </Layout>
   );
