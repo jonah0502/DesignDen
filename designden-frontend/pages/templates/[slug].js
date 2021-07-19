@@ -56,28 +56,39 @@ export default function TemplatePage({ tmp }) {
     )
   }
 
- export async function getStaticPaths() {
-   const res = await fetch(`${API_URL}/api/templates`)
-   const templates = await res.json()
+//  export async function getStaticPaths() {
+//    const res = await fetch(`${API_URL}/api/templates`)
+//    const templates = await res.json()
 
-   const paths = templates.map((tmp) => ({
-     params: { slug: tmp.slug },
-   }))
+//    const paths = templates.map((tmp) => ({
+//      params: { slug: tmp.slug },
+//    }))
 
-   return {
-     paths,
-     fallback: true,
-   }
- }
+//    return {
+//      paths,
+//      fallback: true,
+//    }
+//  }
 
- export async function getStaticProps({ params: { slug } }) {
-   const res = await fetch(`${API_URL}/api/templates/${slug}`)
-   const templates = await res.json()
+//  export async function getStaticProps({ params: { slug } }) {
+//    const res = await fetch(`${API_URL}/api/templates/${slug}`)
+//    const templates = await res.json()
 
-   return {
-     props: {
-       tmp: templates[0],
-     },
-     revalidate: 1,
-   }
- }
+//    return {
+//      props: {
+//        tmp: templates[0],
+//      },
+//      revalidate: 1,
+//    }
+//  }
+
+export async function getServerSideProps({ query: { slug } }) {
+    const res = await fetch(`${API_URL}/api/templates/${slug}`)
+    const templates = await res.json()
+  
+    return {
+      props: {
+        tmp: templates[0],
+      },
+    }
+  }
