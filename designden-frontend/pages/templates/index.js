@@ -1,12 +1,9 @@
 import Layout from "@/components/Layout";
 import Link from "next/link";
+import TemplateItem from '@/components/TemplateItem'
+import {API_URL} from '@/config/index'
 
-export default function TemplatesPage() {
-  // sample data
-  let nums = [];
-  for (let i = 0; i < 10; i++) {
-    nums[i] = i + 1;
-  }
+export default function TemplatesPage({temps}) {
   // TODO: route "/templates/add" should be something like "/users/[id]/templates/add"
   return (
     <Layout>
@@ -15,11 +12,21 @@ export default function TemplatesPage() {
       <div>
         <input type="text" placeholder="Search" />
       </div>
-      <ul>
-        {nums.map((i) => (
-          <li key={i}>Template {i}</li>
-        ))}
-      </ul>
+      {temps.length === 0 && <h3>No templates to show</h3>}
+
+      {temps.map(tmp=>(
+        <TemplateItem key={tmp.id} tmp={tmp} />
+      ))}
     </Layout>
   );
+}
+
+export async function getStaticProps(){
+  const res = await fetch(`${API_URL}/api/templates`)
+  const temps = await res.json()
+
+  return{
+    props: {temps},
+    revalidate: 1,
+  }
 }
