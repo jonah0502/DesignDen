@@ -7,26 +7,16 @@ export default function SignupPage() {
     <Layout title="Signup">
       <form className={styles.container}>
         <h1>Sign Up</h1>
-        <input type="text" name="fname" id="fname" placeholder="First Name" />
-        <input type="text" name="lname" id="lname" placeholder="Last Name" />
+        <input type="text" placeholder="First Name" />
+        <input type="text" placeholder="Last Name" />
         <div className={styles.dateInput}>
           <label htmlFor="birthdate">Date of birth:</label>
-          <input type="date" name="birthdate" id="birthdate" />
+          <input type="date" />
         </div>
-        <input type="email" name="email" id="email" placeholder="Email" />
-        <input
-          type="text"
-          name="password"
-          id="password"
-          placeholder="Password"
-        />
-        <input
-          type="text"
-          name="password-confirm"
-          id="password-confirm"
-          placeholder="Confirm Password"
-        />
-        <button type="submit">Sign Up</button>
+        <input type="email" placeholder="Email" />
+        <input type="text" placeholder="Password" />
+        <input type="text" placeholder="Confirm Password" />
+        <button>Sign Up</button>
         <div className={styles.formFooter}>
           <p>Already have an account?</p>
           <Link href="/login">Login</Link>

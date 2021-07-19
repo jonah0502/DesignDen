@@ -21,9 +21,13 @@ export default function Header() {
               <a>Login</a>
             </Link>
           </li>
+          <li>
+            <Link href="/checkout">
+              <a>Cart</a>
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>
   );
 }
-
