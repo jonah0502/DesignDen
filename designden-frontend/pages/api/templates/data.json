@@ -1,0 +1,59 @@
+{
+  "templates": [
+    {
+      "id": "1",
+      "name": "Cryptocurrency Web App React JS Template",
+      "slug": "cryptocurrency-web-app-react-js-template",
+      "updated": "June 09, 2021",
+      "author": "Person1",
+      "date": "June 09, 2021",
+      "price": 60,
+      "description": "okrix is Powerful and Complete Solution for your Crypto Currencies ICO start up business.Now you can Easily Start an ICO website in just a few clicks.Our Tokrix dashboard is carefully coded to look great on any devices. We provide you beautiful collection of modern ICO and Crypto layouts. Create your website without any effort and adapt it to suit your needs quickly and easily with our ico website Dashboard.",
+      "image": "/images/sample/template-1.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Custom Interactive Map jQuery Plugin",
+      "slug": "custom-interactive-map-jquery-plugin",
+      "updated": "June 09, 2021",
+      "author": "person2",
+      "date": "June 2, 2021",
+      "price": 30,
+      "description": "FlipTimer is a WordPress Plugin that allows you to create easy and fast countdown/countup timers for your website. Easy to setup and integrate in any project.",
+      "image": "/images/sample/template-2.jpg"
+    },
+    {
+      "id": "3",
+      "name": "React Personal Portfolio Template + React Hooks",
+      "slug": "react-personal-portfolio-template-react-hooks",
+      "updated": "June 09, 2021",
+      "author": "person3",
+      "date": "June 11, 2021",
+      "price": 50,
+      "description": "Reactor – Personal Portfolio React Template is for many purpose. It’s a creative, minimal and Responsive design. This has been built with React (version : 17.0.2), ES6+, styled components, material ui, react-router-dom etc. This is created especially for those who want to build up his portfolio site. All files and code has been well organized and documented. It is easily customizable.",
+      "image": "/images/sample/template-3.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Multipurpose eCommerce WordPress Theme",
+      "slug": "multipurpose-ecommerce-wordpress-theme",
+      "updated": "June 09, 2021",
+      "author": "person4",
+      "date": "June 20, 2021",
+      "price": 22,
+      "description": "If you are looking for a beautiful WooCommerce WordPress theme for barber shop or unique Hair Salon,... Shang is right choose for you! This theme is also suitable for any kind of online stores such as barber shop, hair store, hair shop… to build their own work.",
+      "image": "/images/sample/template-4.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Marketing HTML Landing Page",
+      "slug": "marketing-html-landing-page",
+      "updated": "June 09, 2021",
+      "author": "person5",
+      "date": "June 30, 2021",
+      "price": 47,
+      "description": "“MEGAPACK” is the BIGGEST HTML Marketing Landing Pages Pack ever made on Themeforest, includes +30 TOTALLY DIFFERENT Landing Pages Layouts with PixFort Online Builder Access that allows you to create powerful pages with unlimited possibilities, with more than +300 Elements and +20 Popup Layouts you can use to make an awesome landing page in minutes with a contact form or subscription form integrated with Custom email, MailChimp, GetResponse, CampaignMonitor, AWeber, ActiveCampaign, MailerLite, MailWizz, FreshMail and Sendloop integrations directly from PixFort platform. This is definitely a New Revolution in the way you create websites! Plus we have included 21 High quality exclusive PSD Mock-ups.",
+      "image": "/images/default_image.jpg"
+    }
+  ]
+}
