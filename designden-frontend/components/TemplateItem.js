@@ -29,9 +29,7 @@ export default function TemplateItem({ tmp }) {
       <div className={styles.link}>
           <span>$ {tmp.price}</span>
           <div></div>
-        <Link href={`/templates/${tmp.slug}`}>
           <a className='btn'>Details</a>
-        </Link>
       </div>
     </div>
   )

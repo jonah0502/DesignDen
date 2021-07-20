@@ -7,7 +7,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export default function TemplatePage({ tmp }) {
-    const router = useRouter()
+const router = useRouter()
   const deleteEvent = (e)=>{
       console.log('delete')
   }

@@ -2,7 +2,7 @@
 const {templates} = require('./data.json')
 export default function handler(req, res) {
     const temp = templates.filter(t => t.slug === req.query.slug)
-  
+    //console.log(process.env)
     if(req.method === 'GET'){
     res.status(200).json(temp)
   }else{
