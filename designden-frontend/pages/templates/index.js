@@ -4,7 +4,9 @@ import TemplateItem from '@/components/TemplateItem'
 import {API_URL} from '@/config/index'
 import data from '../api/templates/data.json'
 
-export default function TemplatesPage({temps}) {
+const jsData = data['templates']
+
+export default function TemplatesPage() {
   // TODO: route "/templates/add" should be something like "/users/[id]/templates/add"
   return (
     <Layout>
@@ -14,7 +16,9 @@ export default function TemplatesPage({temps}) {
          <input type="text" placeholder="Search" />
        </div>
         <h3>No templates to show</h3>
-
+           {jsData.map(tmp=>(
+         <TemplateItem key={tmp.id} tmp={tmp} />
+       ))}
     </Layout>
     // <Layout>
     //   <h1>Templates</h1>
@@ -31,17 +35,17 @@ export default function TemplatesPage({temps}) {
   );
 }
 
-export async function getInitialProps(){
-  const res = await fetch(`${API_URL}/api/templates`)
-  const temps = await res.json()
-  
-  if (!temps) {
-    return {
-      notFound: true,
-    }
-  }
-  return{
-    props: {temps},
-    revalidate: 1,
-  }
-}
+// export async function getInitialProps(){
+//   //const res = await fetch(`${API_URL}/api/templates`)
+//   const temps = jsData
+//   console.log(temps)
+//   if (!temps) {
+//     return {
+//       notFound: true,
+//     }
+//   }
+//   return{
+//     props: {temps},
+//     revalidate: 1,
+//   }
+// }
