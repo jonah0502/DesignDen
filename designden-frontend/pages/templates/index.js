@@ -15,7 +15,6 @@ export default function TemplatesPage() {
        <div>
          <input type="text" placeholder="Search" />
        </div>
-        <h3>No templates to show</h3>
            {jsData.map(tmp=>(
          <TemplateItem key={tmp.id} tmp={tmp} />
        ))}
