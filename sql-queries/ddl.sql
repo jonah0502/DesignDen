@@ -116,3 +116,90 @@ VALUES
     (4, 1, 1);
 
 
+--Products
+DROP TABLE IF EXISTS products;
+
+CREATE TABLE products (
+    productID: int AUTO_INCREMENT NOT NULL unique,
+    userID: int not NULL,
+    description: varchar(255),
+    name: varchar(255) not NULL,
+    imageURL: varchar(255),
+    price: decimal(13, 2) not NULL,
+    datePosted: date not NULL,
+    lastUpdated: date not NULL,
+    PRIMARY KEY (productID),
+    FOREIGN KEY (userID) 
+        REFERENCES users(userID)
+        ON DELETE 
+);
+
+INSERT INTO products
+VALUES
+    (DEFAULT, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Cryptocurrency Web App React JS Template", "/images/sample/template-1.jpg", 60, "2021-07-15","2021-07-15"),
+    (DEFAULT, 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Custom Interactive Map jQuery Plugin", "/images/sample/template-2.jpg", 30, "2021-12-15","2021-12-15"),
+    (DEFAULT, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "React Personal Portfolio Template + React Hooks", "/images/sample/template-3.jpg", 50, "2021-09-15","2021-09-15"),
+    (DEFAULT, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Multipurpose eCommerce WordPress Theme", "/images/sample/template-4.jpg", 22, "2020-09-15","2021-09-15"),
+    (DEFAULT, 1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Marketing HTML Landing Page", "/images/default_image.jpg", 22, "2020-09-15","2021-09-15");
+
+--Orders
+DROP TABLE IF EXISTS orders;
+
+CREATE TABLE orders (
+    orderID: int auto_increment unique not NULL,
+    userID: int not NULL,
+    billingAddressID: int not NULL,
+    orderDate: Date not NULL,
+    firstName: varchar(255) not NULL,
+    lastName: varchar(255) not NULL,
+    email: varchar(255) unique not NULL,
+    PRIMARY KEY (orderID),
+    FOREIGN KEY (userID) 
+        REFERENCES users(userID)
+        ON DELETE,
+    FOREIGN KEY (billingAddressID) 
+        REFERENCES addresses(addressID)
+        ON DELETE
+);
+
+INSERT INTO orders
+VALUES
+    (DEFAULT, 1, 1, "2020-09-15", "Jonah", "Biedermann", "jonah0502@gmail.com"),
+    (DEFAULT, 2, 1,"2020-10-15", "Abbey", "Ramsey", "aream123@gmail.com" ),
+    (DEFAULT, 1, 1,"2020-09-17", "John", "Ackerman" , "ackerj@gmail.com");
+
+--products_orders
+
+DROP TABLE IF EXISTS products_orders;
+
+CREATE TABLE users_products (
+    orderID: int, not NULL,
+    productID:int, not NULL,
+    quantity INT NOT NULL
+);
+
+
+INSERT INTO users_products
+VALUES
+    (0, 1, 1),
+    (1, 2, 1),
+    (2, 1, 1);
+
+--Addresses
+DROP TABLE IF EXISTS addresses;
+
+CREATE TABLE addresses (
+    addressID: int auto_increment unique not NULL,
+    streetAddress: varchar(50) not NULL,
+    city: varchar(50) not NULL,
+    zip: varchar(11) not NULL,
+    state: char(2) not NULL,
+    country: char(2) not NULL,
+    PRIMARY KEY (addressID);
+);
+
+INSERT INTO addresses
+VALUES
+    (DEFAULT, "181 Cambridge Street Lake Villa", "San Jose","95127","CA", "US"),
+    (DEFAULT, "7161 Del Monte Ave. San Jose", "Romulus", "48174","MI", "US"),
+    (DEFAULT, "7391 School St. Romulus", "Lake Villa", "60046","IL", "US");
