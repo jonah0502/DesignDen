@@ -93,21 +93,62 @@ WHERE userID = :userID AND productID = :productID;
 
 
 --Products
-
---Create
-INSERT INTO products
-    (userID, description, name, imageURL, price, datePosted, lastUpdated)
-VALUES
-    (0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Cryptocurrency Web App React JS Template", "/images/sample/template-1.jpg", 60, "2021-07-15","2021-07-15"),
-
 --Read 1
+SELECT * FROM products
+WHERE productID = :productID;
 
-SELECT * from products where productID = 1;
 
 --Read All
 SELECT * from products;
 
 --Update
-
+UPDATE products
+SET description = :description , name = :name , imageURL = :imageURL , price = :price , passwordHash = :passwordHash , datePosted = :datePosted , lastUpdated = :lastUpdated
+WHERE productID = :productID;
 
 --Delete
+DELETE FROM products
+WHERE productID = :productID;
+
+
+--Orders
+
+--Read one order
+
+SELECT * FROM orders
+WHERE orderID = :orderID;
+
+
+--Read all orders from a user
+
+SELECT * FROM orders
+WHERE userID = :userID;
+
+--Products_Orders
+
+--Read all products from an order
+SELECT * FROM products_orders
+WHERE orderID = :orderID;
+
+--Read All products_orders
+SELECT * FROM products_orders
+
+--Addresses
+
+-- Read One
+
+SELECT * FROM addresses
+WHERE addressID = :addressID;
+
+--Read All
+SELECT * FROM addresses
+
+--Update
+UPDATE addresses
+SET streetAddress = :streetAddress , city = :city , zip = :zip , state = :state , country = :country
+WHERE addressID = :addressID;
+
+--Delete
+
+DELETE FROM addresses
+WHERE addressID = :addressID;
