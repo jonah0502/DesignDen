@@ -1,5 +1,7 @@
 -- Data definition queries
 
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- USERS
 DROP TABLE IF EXISTS users;
 
@@ -21,11 +23,11 @@ CREATE TABLE users (
 INSERT INTO users
     (addressID, firstName, lastName, email, passwordHash, birthDate, storeCredits)
 VALUES
-    (0, "Alice", "Baker", "abaker@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1995-01-12", 100),
-    (1, "Bob", "Smith", "bsmith@exmple.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1990-07-25", 70),
+    (1, "Alice", "Baker", "abaker@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1995-01-12", 100),
+    (2, "Bob", "Smith", "bsmith@exmple.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1990-07-25", 70),
     (NULL, "Carol", "Henderson", "chenderson@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1997-03-15", 0),
     (NULL, "David", "Kim", "dkim@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1987-12-07", 40),
-    (2, "Eve", "Walker", "ewalker@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "2001-04-20", 2000);
+    (3, "Eve", "Walker", "ewalker@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "2001-04-20", 2000);
 
 
 -- REVIEWS
@@ -38,7 +40,8 @@ CREATE TABLE reviews (
     stars INT NOT NULL,
     reviewText text,
     datePosted DATE NOT NULL,
-    lastUpdated DATE NOT NULL
+    lastUpdated DATE NOT NULL,
+    PRIMARY KEY (reviewID),
     FOREIGN KEY (productID)
         REFERENCES products(productID)
         ON DELETE CASCADE,
@@ -50,11 +53,11 @@ CREATE TABLE reviews (
 INSERT INTO reviews
     (productID, userID, stars, reviewText, datePosted, lastUpdated)
 VALUES
-    (0, 0, 4, "Great product!", "2021-07-15", "2021-07-15"),
-    (0, 3, 3, NULL, "2021-07-17", "2021-07-17"),
-    (1, 1, 4, NULL, "2021-07-15", "2021-07-15"),
-    (2, 4, 5, "I really like this template!", "2021-07-20", "2021-07-20"),
-    (3, 2, 4, NULL, "2021-07-21", "2021-07-21");
+    (1, 1, 5, "Great product!", "2021-07-15", "2021-07-15"),
+    (1, 4, 4, NULL, "2021-07-17", "2021-07-17"),
+    (2, 2, 5, NULL, "2021-07-15", "2021-07-15"),
+    (3, 5, 6, "I really like this template!", "2021-07-20", "2021-07-20"),
+    (4, 3, 5, NULL, "2021-07-21", "2021-07-21");
 
 
 -- TAGS
@@ -95,14 +98,14 @@ CREATE TABLE products_tags (
 INSERT INTO products_tags
     (productID, tagID)
 VALUES
-    (0, 3),
-    (0, 1),
+    (1, 4),
     (1, 2),
-    (2, 1),
-    (2, 6),
-    (3, 4),
+    (2, 3),
+    (3, 2),
+    (3, 7),
     (4, 5),
-    (4, 1);
+    (5, 6),
+    (5, 2);
 
 
 -- USERS_PRODUCTS
@@ -114,7 +117,7 @@ CREATE TABLE users_products (
     quantity INT NOT NULL,
     FOREIGN KEY (userID) 
         REFERENCES users(userID)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
     FOREIGN KEY (productID)
         REFERENCES products(productID)
         ON DELETE CASCADE
@@ -123,9 +126,9 @@ CREATE TABLE users_products (
 INSERT INTO users_products
     (userID, productID, quantity)
 VALUES
-    (0, 1, 1),
-    (0, 2, 1),
-    (4, 1, 1);
+    (1, 2, 2),
+    (1, 3, 2),
+    (5, 2, 2);
 
 
 --Products
@@ -150,11 +153,11 @@ CREATE TABLE products (
 INSERT INTO products
     (userID, description, name, imageURL, price, datePosted, lastUpdated)
 VALUES
-    (0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Cryptocurrency Web App React JS Template", "/images/sample/template-1.jpg", 60, "2021-07-15","2021-07-15"),
-    (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Custom Interactive Map jQuery Plugin", "/images/sample/template-2.jpg", 30, "2021-12-15","2021-12-15"),
-    (0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "React Personal Portfolio Template + React Hooks", "/images/sample/template-3.jpg", 50, "2021-09-15","2021-09-15"),
-    (2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Multipurpose eCommerce WordPress Theme", "/images/sample/template-4.jpg", 22, "2020-09-15","2021-09-15"),
-    (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Marketing HTML Landing Page", "/images/default_image.jpg", 22, "2020-09-15","2021-09-15");
+    (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Cryptocurrency Web App React JS Template", "/images/sample/template-1.jpg", 60, "2021-07-15","2021-07-15"),
+    (2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Custom Interactive Map jQuery Plugin", "/images/sample/template-2.jpg", 30, "2021-12-15","2021-12-15"),
+    (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "React Personal Portfolio Template + React Hooks", "/images/sample/template-3.jpg", 50, "2021-09-15","2021-09-15"),
+    (3, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Multipurpose eCommerce WordPress Theme", "/images/sample/template-4.jpg", 22, "2020-09-15","2021-09-15"),
+    (2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Marketing HTML Landing Page", "/images/default_image.jpg", 22, "2020-09-15","2021-09-15");
 
 
 --Orders
@@ -187,18 +190,22 @@ VALUES
 
 DROP TABLE IF EXISTS products_orders;
 
-CREATE TABLE users_products (
-    orderID int, not NULL,
-    productID int, not NULL,
-    quantity int NOT NULL
+CREATE TABLE products_orders (
+    orderID int not NULL,
+    productID int not NULL,
+    quantity int NOT NULL,
+    FOREIGN KEY (orderID)
+        REFERENCES orders(orderID),
+    FOREIGN KEY (productID)
+        REFERENCES products(productID)
 );
 
-INSERT INTO users_products
+INSERT INTO products_orders
     (orderID, productID, quantity)
 VALUES
-    (0, 1, 1),
-    (1, 2, 1),
-    (2, 1, 1);
+    (1, 2, 2),
+    (2, 3, 2),
+    (3, 2, 2);
 
 --Addresses
 DROP TABLE IF EXISTS addresses;
@@ -210,7 +217,7 @@ CREATE TABLE addresses (
     zip varchar(11) not NULL,
     state char(2) not NULL,
     country char(2) not NULL,
-    PRIMARY KEY (addressID);
+    PRIMARY KEY (addressID)
 );
 
 INSERT INTO addresses
@@ -219,4 +226,6 @@ VALUES
     ("181 Cambridge Street Lake Villa", "San Jose","95127","CA", "US"),
     ("7161 Del Monte Ave. San Jose", "Romulus", "48174","MI", "US"),
     ("7391 School St. Romulus", "Lake Villa", "60046","IL", "US");
+
+SET FOREIGN_KEY_CHECKS = 1;
 
