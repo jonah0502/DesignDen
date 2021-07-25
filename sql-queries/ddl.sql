@@ -162,7 +162,7 @@ DROP TABLE IF EXISTS orders;
 
 CREATE TABLE orders (
     orderID int auto_increment unique not NULL,
-    userID int not NULL,
+    userID int,
     billingAddressID int not NULL,
     orderDate Date not NULL,
     firstName varchar(255) not NULL,
@@ -170,7 +170,8 @@ CREATE TABLE orders (
     email varchar(255) unique not NULL,
     PRIMARY KEY (orderID),
     FOREIGN KEY (userID) 
-        REFERENCES users(userID),
+        REFERENCES users(userID)
+        ON DELETE SET NULL,
     FOREIGN KEY (billingAddressID) 
         REFERENCES addresses(addressID)
 );
