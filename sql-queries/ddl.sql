@@ -21,11 +21,11 @@ CREATE TABLE users (
 INSERT INTO users
     (addressID, firstName, lastName, email, passwordHash, birthDate, storeCredits)
 VALUES
-    (0, "Alice", "Baker", "abaker@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq ", "1995-01-12", 100),
-    (1, "Bob", "Smith", "bsmith@exmple.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq ", "1990-07-25", 70),
-    (NULL, "Carol", "Henderson", "chenderson@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq ", "1997-03-15", 0),
-    (NULL, "David", "Kim", "dkim@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq ", "1987-12-07", 40),
-    (2, "Eve", "Walker", "ewalker@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq ", "2001-04-20", 2000);
+    (0, "Alice", "Baker", "abaker@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1995-01-12", 100),
+    (1, "Bob", "Smith", "bsmith@exmple.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1990-07-25", 70),
+    (NULL, "Carol", "Henderson", "chenderson@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1997-03-15", 0),
+    (NULL, "David", "Kim", "dkim@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1987-12-07", 40),
+    (2, "Eve", "Walker", "ewalker@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "2001-04-20", 2000);
 
 
 -- REVIEWS
@@ -114,7 +114,10 @@ CREATE TABLE users_products (
     quantity INT NOT NULL,
     FOREIGN KEY (userID) 
         REFERENCES users(userID)
-        ON DELETE 
+        ON DELETE CASCADE
+    FOREIGN KEY (productID)
+        REFERENCES products(productID)
+        ON DELETE CASCADE
 );
 
 INSERT INTO users_products
