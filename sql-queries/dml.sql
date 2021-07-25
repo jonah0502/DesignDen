@@ -1,4 +1,5 @@
 -- Data manipulation queries
+-- The : character being used to denote variables from backend language
 
 -- USERS
 
@@ -118,6 +119,9 @@ WHERE productID = :productID;
 SELECT * FROM orders
 WHERE orderID = :orderID;
 
+--Read all orders
+
+SELECT * FROM orders;
 
 --Read all orders from a user
 
@@ -132,6 +136,12 @@ WHERE orderID = :orderID;
 
 --Read All products_orders
 SELECT * FROM products_orders
+
+-- Read all products purchased by user
+SELECT * FROM products
+JOIN products_orders ON products.productID = products_orders.productID
+JOIN orders ON orders.orderID = products_orders.orderID
+WHERE order.userID = :userID;
 
 --Addresses
 
