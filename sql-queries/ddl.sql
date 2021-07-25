@@ -143,7 +143,7 @@ CREATE TABLE products (
     PRIMARY KEY (productID),
     FOREIGN KEY (userID) 
         REFERENCES users(userID)
-        ON DELETE 
+        ON DELETE CASCADE
 );
 
     
@@ -170,11 +170,9 @@ CREATE TABLE orders (
     email varchar(255) unique not NULL,
     PRIMARY KEY (orderID),
     FOREIGN KEY (userID) 
-        REFERENCES users(userID)
-        ON DELETE,
+        REFERENCES users(userID),
     FOREIGN KEY (billingAddressID) 
         REFERENCES addresses(addressID)
-        ON DELETE
 );
 
 INSERT INTO orders
