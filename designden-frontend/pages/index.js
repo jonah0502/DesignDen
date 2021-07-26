@@ -10,7 +10,7 @@ export default function HomePage() {
         <meta name="description" content="Welcome to DesignDen"></meta>
       </Head>
       <h1>Home</h1>
-      <Link href="/index">Index</Link>
+      <Link href="/admin">Index</Link>
       <br />
       <Link href="/about">About</Link>
     </Layout>
