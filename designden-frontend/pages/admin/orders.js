@@ -62,7 +62,9 @@ const orders = [
 export default function OrdersPage() {
   return (
     <Layout>
-      <h1>View Orders</h1>
+      <h1>Orders</h1>
+      <p>Supported operations: Create, Read</p>
+      <br />
       <div className={styles.tableContainer}>
         <table>
           <thead>

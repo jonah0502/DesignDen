@@ -75,6 +75,8 @@ export default function UsersPage() {
   return (
     <Layout>
       <h1>Users</h1>
+      <p>Supported operations: Create, Read, Update, Delete</p>
+      <br />
       <div className={styles.tableContainer}>
         <table>
           <thead>

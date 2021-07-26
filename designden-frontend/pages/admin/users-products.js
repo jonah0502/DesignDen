@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import styles from "@/styles/Table.module.css";
 import { useState } from "react";
 
-const cartHeaders = ["UserID", "ProductID", "Quantity", "Delete"];
+const cartHeaders = ["UserID", "ProductID", "Quantity", "Update", "Delete"];
 
 const cartData = [
   {
@@ -30,6 +30,13 @@ const cartData = [
 export default function UsersProductsPage() {
   const [cartItems, setCartItems] = useState(cartData);
 
+  const handleRowChange = (index) => (event) => {
+    const { name, value } = event.target;
+    const newCartItems = [...cartItems];
+    newCartItems[index][name] = value;
+    setCartItems(newCartItems);
+  };
+
   const handleRowDelete = (index) => (event) => {
     const newCartItems = [...cartItems];
     newCartItems.splice(index, 1);
@@ -39,6 +46,9 @@ export default function UsersProductsPage() {
   return (
     <Layout>
       <h1>Users_Products</h1>
+      <p>Represents the products currently in the users cart</p>
+      <p>Supported operations: Create, Read, Update, Delete</p>
+      <br />
       <div className={styles.tableContainer}>
         <table>
           <thead>
@@ -59,7 +69,11 @@ export default function UsersProductsPage() {
                     name="quantity"
                     value={item.quantity}
                     min="1"
+                    onChange={handleRowChange(index)}
                   />
+                </td>
+                <td>
+                  <button>Update</button>
                 </td>
                 <td>
                   <button onClick={handleRowDelete(index)}>Delete</button>

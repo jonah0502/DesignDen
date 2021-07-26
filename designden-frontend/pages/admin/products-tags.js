@@ -6,18 +6,6 @@ const headers = ["ProductID", "TagID", "Update", "Delete"];
 
 const data = [
   {
-    productID: 0,
-    tagID: 0,
-  },
-  {
-    productID: 0,
-    tagID: 1,
-  },
-  {
-    productID: 0,
-    tagID: 3,
-  },
-  {
     productID: 1,
     tagID: 1,
   },
@@ -26,12 +14,20 @@ const data = [
     tagID: 2,
   },
   {
-    productID: 2,
-    tagID: 1,
+    productID: 1,
+    tagID: 4,
   },
   {
     productID: 2,
-    tagID: 4,
+    tagID: 2,
+  },
+  {
+    productID: 2,
+    tagID: 3,
+  },
+  {
+    productID: 3,
+    tagID: 2,
   },
   {
     productID: 3,
@@ -39,7 +35,11 @@ const data = [
   },
   {
     productID: 4,
-    tagID: 3,
+    tagID: 6,
+  },
+  {
+    productID: 5,
+    tagID: 4,
   },
 ];
 
@@ -77,6 +77,9 @@ export default function ProductTagsPage() {
   return (
     <Layout>
       <h1>Products_Tags</h1>
+      <p>Represents the tags associated with each product</p>
+      <p>Supported operations: Create, Read, Update, Delete</p>
+      <br />
       <div className={styles.tableContainer}>
         <table>
           <thead>

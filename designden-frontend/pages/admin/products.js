@@ -85,8 +85,8 @@ export default function ProductsPage() {
   return (
     <Layout>
       <h1>Products</h1>
-      <p>Represents a web template product</p>
       <p>Supported operations: Create, Read, Update</p>
+      <br />
       <input
         type="text"
         value={filter}
@@ -167,6 +167,7 @@ export default function ProductsPage() {
           </tbody>
         </table>
       </div>
+      <br />
       <h3>Add new product</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>

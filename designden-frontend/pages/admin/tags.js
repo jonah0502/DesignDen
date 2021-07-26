@@ -6,31 +6,31 @@ const tagHeaders = ["TagID", "TagName", "Update", "Delete"];
 
 const tagData = [
   {
-    id: 0,
+    id: 1,
     tagName: "HTML",
   },
   {
-    id: 1,
+    id: 2,
     tagName: "CSS",
   },
   {
-    id: 2,
+    id: 3,
     tagName: "Wordpress",
   },
   {
-    id: 3,
+    id: 4,
     tagName: "React",
   },
   {
-    id: 4,
+    id: 5,
     tagName: "Angular",
   },
   {
-    id: 5,
+    id: 6,
     tagName: "Vue",
   },
   {
-    id: 6,
+    id: 7,
     tagName: "JQuery",
   },
 ];
@@ -66,6 +66,8 @@ export default function TagsPage() {
   return (
     <Layout>
       <h1>Tags</h1>
+      <p>Supported operations: Create, Read, Update, Delete</p>
+      <br />
       <div className={styles.tableContainer}>
         <table>
           <thead>

@@ -40,6 +40,9 @@ export default function ProductOrdersPage() {
   return (
     <Layout>
       <h1>Products_Orders</h1>
+      <p>Represents the products associated with each order</p>
+      <p>Supported operations: Create, Read</p>
+      <br />
       <div className={styles.tableContainer}>
         <table>
           <thead>

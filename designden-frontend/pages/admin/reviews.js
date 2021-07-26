@@ -15,7 +15,7 @@ const reviewHeaders = [
 
 const reviewData = [
   {
-    id: 0,
+    id: 1,
     productID: 1,
     userID: 0,
     stars: 4,
@@ -23,7 +23,7 @@ const reviewData = [
     date: new Date(2021, 6, 15).toISOString().split("T")[0],
   },
   {
-    id: 1,
+    id: 2,
     productID: 4,
     userID: 2,
     stars: 3,
@@ -31,7 +31,7 @@ const reviewData = [
     date: new Date(2021, 6, 17).toISOString().split("T")[0],
   },
   {
-    id: 2,
+    id: 3,
     productID: 2,
     userID: 4,
     stars: 5,
@@ -39,7 +39,7 @@ const reviewData = [
     date: new Date(2021, 6, 17).toISOString().split("T")[0],
   },
   {
-    id: 3,
+    id: 4,
     productID: 1,
     userID: 4,
     stars: 4,
@@ -67,6 +67,8 @@ export default function ReviewPage() {
   return (
     <Layout>
       <h1>Reviews</h1>
+      <p>Supported operations: Create, Read, Update, Delete</p>
+      <br />
       <div className={styles.tableContainer}>
         <table>
           <thead>

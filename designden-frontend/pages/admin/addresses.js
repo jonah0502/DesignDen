@@ -67,6 +67,8 @@ export default function AddressesPage() {
   return (
     <Layout>
       <h1>Addresses</h1>
+      <p>Supported operations: Create, Read, Update, Delete</p>
+      <br />
       <div className={styles.tableContainer}>
         <table>
           <thead>
