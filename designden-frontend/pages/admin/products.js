@@ -85,6 +85,8 @@ export default function ProductsPage() {
   return (
     <Layout>
       <h1>Products</h1>
+      <p>Represents a web template product</p>
+      <p>Supported operations: Create, Read, Update</p>
       <input
         type="text"
         value={filter}
