@@ -3,3 +3,12 @@
   max-width: 960px;
   padding: 0 30px;
 }
+
+.adminContainer {
+    display: flex;
+    justify-content: flex-start;
+    margin: 60px auto;
+    max-width: 100%;
+    padding: 0 30px;
+}
+
