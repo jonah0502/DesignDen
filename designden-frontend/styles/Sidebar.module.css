@@ -1,0 +1,17 @@
+.sidebar {
+    width: 20%;
+    margin: 60px 10px;
+}
+
+.sidebar li {
+    list-style-type: none;
+}
+
+.sidebar a {
+    display: block;
+    padding: 5px;
+}
+
+.sidebar a:hover {
+    background-color: #f3f3f3;
+}
