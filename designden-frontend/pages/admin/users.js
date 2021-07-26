@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Sidebar from "@/components/Sidebar";
 import styles from "@/styles/Table.module.css";
 import { useState } from "react";
 
