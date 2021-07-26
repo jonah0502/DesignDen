@@ -4,6 +4,7 @@ import { useState } from "react";
 
 const userHeaders = [
   "UserID",
+  "AddressID",
   "FirstName",
   "LastName",
   "Email",
@@ -15,6 +16,7 @@ const userHeaders = [
 const usersData = [
   {
     id: 1,
+    addressID: 1,
     firstName: "Alice",
     lastName: "Baker",
     email: "abaker@example.com",
@@ -23,6 +25,7 @@ const usersData = [
   },
   {
     id: 2,
+    addressID: 2,
     firstName: "Bob",
     lastName: "Smith",
     email: "bsmith@example.com",
@@ -31,6 +34,7 @@ const usersData = [
   },
   {
     id: 3,
+    addressID: "null",
     firstName: "Carol",
     lastName: "Henderson",
     email: "chenderson@example.com",
@@ -39,6 +43,7 @@ const usersData = [
   },
   {
     id: 4,
+    addressID: 3,
     firstName: "David",
     lastName: "Kim",
     email: "dkim@example.com",
@@ -47,6 +52,7 @@ const usersData = [
   },
   {
     id: 5,
+    addressID: "null",
     firstName: "Eve",
     lastName: "Walker",
     email: "ewalker@example.com",
@@ -83,6 +89,15 @@ export default function UsersPage() {
             {users.map((user, index) => (
               <tr key={user.id}>
                 <td>{user.id}</td>
+                <td>
+                  <input
+                    type="number"
+                    name="addressID"
+                    value={user.addressID}
+                    placeholder="null"
+                    onChange={handleRowChange(index)}
+                  />
+                </td>
                 <td>
                   <input
                     type="text"
