@@ -10,7 +10,6 @@ const userHeaders = [
   "Birthdate",
   "StoreCredits",
   "Update",
-  "Delete",
 ];
 
 const usersData = [
@@ -66,16 +65,10 @@ export default function UsersPage() {
     setUsers(newUsers);
   };
 
-  const handleRowDelete = (index) => (event) => {
-    const newUsers = [...users];
-    newUsers.splice(index, 1);
-    setUsers(newUsers);
-  };
-
   return (
     <Layout>
       <h1>Users</h1>
-      <p>Supported operations: Create, Read, Update, Delete</p>
+      <p>Supported operations: Create, Read, Update</p>
       <br />
       <div className={styles.tableContainer}>
         <table>
@@ -132,9 +125,6 @@ export default function UsersPage() {
                 </td>
                 <td>
                   <button>Update</button>
-                </td>
-                <td>
-                  <button onClick={handleRowDelete(index)}>Delete</button>
                 </td>
               </tr>
             ))}
