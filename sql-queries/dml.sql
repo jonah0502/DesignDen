@@ -15,10 +15,6 @@ UPDATE users
 SET addressID = :addressID , firstName = :firstName , lastName = :lastName , email = :email , passwordHash = :passwordHash , birthDate = :birthDate , storeCredits = :storeCredits
 WHERE userID = :userID;
 
--- delete a user
-DELETE FROM users
-WHERE userID = :userID;
-
 
 -- REVIEWS
 
@@ -105,10 +101,6 @@ SELECT * from products;
 --Update
 UPDATE products
 SET description = :description , name = :name , imageURL = :imageURL , price = :price , passwordHash = :passwordHash , datePosted = :datePosted , lastUpdated = :lastUpdated
-WHERE productID = :productID;
-
---Delete
-DELETE FROM products
 WHERE productID = :productID;
 
 

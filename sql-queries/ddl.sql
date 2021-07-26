@@ -44,10 +44,8 @@ CREATE TABLE reviews (
     PRIMARY KEY (reviewID),
     FOREIGN KEY (productID)
         REFERENCES products(productID)
-        ON DELETE CASCADE,
     FOREIGN KEY (userID) 
         REFERENCES users(userID)
-        ON DELETE CASCADE
 );
 
 INSERT INTO reviews
@@ -89,7 +87,6 @@ CREATE TABLE products_tags (
     tagID INT NOT NULL,
     FOREIGN KEY (productID)
         REFERENCES products(productID)
-        ON DELETE CASCADE,
     FOREIGN KEY (tagID) 
         REFERENCES tags(tagID)
         ON DELETE CASCADE
@@ -117,10 +114,8 @@ CREATE TABLE users_products (
     quantity INT NOT NULL,
     FOREIGN KEY (userID) 
         REFERENCES users(userID)
-        ON DELETE CASCADE,
     FOREIGN KEY (productID)
         REFERENCES products(productID)
-        ON DELETE CASCADE
 );
 
 INSERT INTO users_products
@@ -146,7 +141,6 @@ CREATE TABLE products (
     PRIMARY KEY (productID),
     FOREIGN KEY (userID) 
         REFERENCES users(userID)
-        ON DELETE CASCADE
 );
 
     
@@ -165,7 +159,7 @@ DROP TABLE IF EXISTS orders;
 
 CREATE TABLE orders (
     orderID int auto_increment unique not NULL,
-    userID int,
+    userID int not NULL,
     billingAddressID int not NULL,
     orderDate Date not NULL,
     firstName varchar(255) not NULL,
@@ -174,7 +168,6 @@ CREATE TABLE orders (
     PRIMARY KEY (orderID),
     FOREIGN KEY (userID) 
         REFERENCES users(userID)
-        ON DELETE SET NULL,
     FOREIGN KEY (billingAddressID) 
         REFERENCES addresses(addressID)
 );
