@@ -4,64 +4,58 @@ import styles from "@/styles/Table.module.css";
 const orderHeaders = [
   "OrderID",
   "UserID",
+  "AddressID",
   "OrderDate",
-  "BillingStreet",
-  "BillingCity",
-  "BillingZip",
-  "BillingState",
-  "BillingCountry",
+  "FirstName",
+  "LastName",
+  "Email",
 ];
 
 const orders = [
   {
-    id: 0,
-    userId: 1,
-    date: new Date(2021, 6, 15).toLocaleDateString(),
-    street: "1903 Rainbow Road",
-    city: "Los Angeles",
-    zip: "90017",
-    state: "CA",
-    country: "US",
-  },
-  {
     id: 1,
-    userId: 1,
+    userID: 1,
+    addressID: 1,
     date: new Date(2021, 6, 15).toLocaleDateString(),
-    street: "1903 Rainbow Road",
-    city: "Los Angeles",
-    zip: "90017",
-    state: "CA",
-    country: "US",
+    firstName: "Alice",
+    lastName: "Baker",
+    email: "abaker@example.com",
   },
   {
     id: 2,
-    userId: 2,
-    date: new Date(2021, 6, 17).toLocaleDateString(),
-    street: "869 Center St",
-    city: "Portland",
-    zip: "97875",
-    state: "OR",
-    country: "US",
+    userID: 1,
+    addressID: 1,
+    date: new Date(2021, 6, 15).toLocaleDateString(),
+    firstName: "Alice",
+    lastName: "Baker",
+    email: "abaker@example.com",
   },
   {
     id: 3,
-    userId: 5,
+    userID: 2,
+    addressID: 2,
     date: new Date(2021, 6, 17).toLocaleDateString(),
-    street: "2053 Leisure Lane",
-    city: "San Luis Obispo",
-    zip: "93401",
-    state: "CA",
-    country: "US",
+    firstName: "Bob",
+    lastName: "Smith",
+    email: "bsmith@example.com",
   },
   {
     id: 4,
-    userId: 3,
+    userID: 5,
+    addressID: 3,
+    date: new Date(2021, 6, 17).toLocaleDateString(),
+    firstName: "Eve",
+    lastName: "Walker",
+    email: "ewalker@example.com",
+  },
+  {
+    id: 5,
+    userId: 4,
+    addressID: 4,
     date: new Date(2021, 6, 18).toLocaleDateString(),
-    street: "3382 Gateway Road",
-    city: "Portland",
-    zip: "97225",
-    state: "OR",
-    country: "US",
+    firstName: "David",
+    lastName: "Kim",
+    email: "dkim@example.com",
   },
 ];
 
@@ -91,6 +85,20 @@ export default function OrdersPage() {
           </tbody>
         </table>
       </div>
+      <br />
+      <h3>Add new order</h3>
+      <form className={styles.formContainer}>
+        <div className={styles.inputContainer}>
+          <input type="text" placeholder="UserID" />
+          <input type="text" placeholder="AddressID" />
+          <input type="text" placeholder="ContactFirstName" />
+          <input type="text" placeholder="ContactLastName" />
+          <input type="text" placeholder="ContactEmail" />
+        </div>
+        <div>
+          <button>Add</button>
+        </div>
+      </form>
     </Layout>
   );
 }
