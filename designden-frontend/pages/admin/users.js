@@ -15,7 +15,7 @@ const userHeaders = [
 
 const usersData = [
   {
-    id: 0,
+    id: 1,
     firstName: "Alice",
     lastName: "Baker",
     email: "abaker@example.com",
@@ -23,7 +23,7 @@ const usersData = [
     storeCredits: 100,
   },
   {
-    id: 1,
+    id: 2,
     firstName: "Bob",
     lastName: "Smith",
     email: "bsmith@example.com",
@@ -31,7 +31,7 @@ const usersData = [
     storeCredits: 70,
   },
   {
-    id: 2,
+    id: 3,
     firstName: "Carol",
     lastName: "Henderson",
     email: "chenderson@example.com",
@@ -39,7 +39,7 @@ const usersData = [
     storeCredits: 0,
   },
   {
-    id: 3,
+    id: 4,
     firstName: "David",
     lastName: "Kim",
     email: "dkim@example.com",
@@ -47,7 +47,7 @@ const usersData = [
     storeCredits: 40,
   },
   {
-    id: 4,
+    id: 5,
     firstName: "Eve",
     lastName: "Walker",
     email: "ewalker@example.com",
@@ -139,6 +139,21 @@ export default function UsersPage() {
           </tbody>
         </table>
       </div>
+      <br />
+      <h3>Add new user</h3>
+      <form className={styles.formContainer}>
+        <div className={styles.inputContainer}>
+          <input type="text" placeholder="FirstName" />
+          <input type="text" placeholder="LastName" />
+          <input type="email" placeholder="Email" />
+          <input type="text" placeholder="Password" />
+          <input type="date" />
+          <input type="number" min="0" placeholder="StoreCredits" />
+        </div>
+        <div>
+          <button>Add</button>
+        </div>
+      </form>
     </Layout>
   );
 }
