@@ -7,9 +7,6 @@ export default function Footer() {
     <footer className={styles.footer}>
       <p>Copyright &copy; DesignDen 2021</p>
       <p>
-        <Link href="/admin">Index</Link>
-      </p>
-      <p>
         <Link href="/about">About This Project</Link>
       </p>
     </footer>

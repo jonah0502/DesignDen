@@ -10,9 +10,16 @@ export default function HomePage() {
         <meta name="description" content="Welcome to DesignDen"></meta>
       </Head>
       <h1>Home</h1>
-      <Link href="/admin">Index</Link>
+      <Link href="/admin">Admin</Link>
       <br />
-      <Link href="/about">About</Link>
+      <p>
+        Note to graders: please use the link to the admin page to review our
+        project.
+        <br />
+        <br />
+        Other client-facing pages are intended to enhance the project as a
+        portfolio project for when the course is over and can be ignored.
+      </p>
     </Layout>
   );
 }
