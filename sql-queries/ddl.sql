@@ -23,11 +23,11 @@ CREATE TABLE users (
 INSERT INTO users
     (addressID, firstName, lastName, email, passwordHash, birthDate, storeCredits)
 VALUES
-    (1, "Alice", "Baker", "abaker@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1995-01-12", 100),
-    (2, "Bob", "Smith", "bsmith@exmple.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1990-07-25", 70),
-    (NULL, "Carol", "Henderson", "chenderson@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1997-03-15", 0),
-    (NULL, "David", "Kim", "dkim@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "1987-12-07", 40),
-    (3, "Eve", "Walker", "ewalker@example.com", "$2y$12$EQ6ak4F1T9s4YwerPQZsMuZIs/j5t9c6wkOyDy8BdsgdhoHyCdTfq", "2001-04-20", 2000);
+    (1, "Alice", "Baker", "abaker@example.com", "xxxxxxxxx", "1995-01-12", 100),
+    (2, "Bob", "Smith", "bsmith@exmple.com", "xxxxxxxxx","1990-07-25", 70),
+    (NULL, "Carol", "Henderson", "chenderson@example.com", "xxxxxxxxx","1997-03-15", 0),
+    (NULL, "David", "Kim", "dkim@example.com", "xxxxxxxxx","1987-12-07", 40),
+    (3, "Eve", "Walker", "ewalker@example.com", "xxxxxxxxx","2001-04-20", 2000);
 
 
 -- REVIEWS
@@ -43,7 +43,7 @@ CREATE TABLE reviews (
     lastUpdated DATE NOT NULL,
     PRIMARY KEY (reviewID),
     FOREIGN KEY (productID)
-        REFERENCES products(productID)
+        REFERENCES products(productID),
     FOREIGN KEY (userID) 
         REFERENCES users(userID)
 );
@@ -86,7 +86,7 @@ CREATE TABLE products_tags (
     productID INT NOT NULL,
     tagID INT NOT NULL,
     FOREIGN KEY (productID)
-        REFERENCES products(productID)
+        REFERENCES products(productID),
     FOREIGN KEY (tagID) 
         REFERENCES tags(tagID)
         ON DELETE CASCADE
@@ -113,7 +113,7 @@ CREATE TABLE users_products (
     productID INT NOT NULL,
     quantity INT NOT NULL,
     FOREIGN KEY (userID) 
-        REFERENCES users(userID)
+        REFERENCES users(userID),
     FOREIGN KEY (productID)
         REFERENCES products(productID)
 );
@@ -147,11 +147,11 @@ CREATE TABLE products (
 INSERT INTO products
     (userID, description, name, imageURL, price, datePosted, lastUpdated)
 VALUES
-    (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Cryptocurrency Web App React JS Template", "/images/sample/template-1.jpg", 60, "2021-07-15","2021-07-15"),
-    (2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Custom Interactive Map jQuery Plugin", "/images/sample/template-2.jpg", 30, "2021-12-15","2021-12-15"),
-    (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "React Personal Portfolio Template + React Hooks", "/images/sample/template-3.jpg", 50, "2021-09-15","2021-09-15"),
-    (3, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Multipurpose eCommerce WordPress Theme", "/images/sample/template-4.jpg", 22, "2020-09-15","2021-09-15"),
-    (2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor.", "Marketing HTML Landing Page", "/images/default_image.jpg", 22, "2020-09-15","2021-09-15");
+    (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Cryptocurrency Web App React JS Template", "/images/sample/template-1.jpg", 60, "2021-07-15","2021-07-15"),
+    (2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Custom Interactive Map jQuery Plugin", "/images/sample/template-2.jpg", 30, "2021-12-15","2021-12-15"),
+    (1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "React Personal Portfolio Template + React Hooks", "/images/sample/template-3.jpg", 50, "2021-09-15","2021-09-15"),
+    (3, "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Multipurpose eCommerce WordPress Theme", "/images/sample/template-4.jpg", 22, "2020-09-15","2021-09-15"),
+    (2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Marketing HTML Landing Page", "/images/default_image.jpg", 22, "2020-09-15","2021-09-15");
 
 
 --Orders
@@ -167,7 +167,7 @@ CREATE TABLE orders (
     email varchar(255) unique not NULL,
     PRIMARY KEY (orderID),
     FOREIGN KEY (userID) 
-        REFERENCES users(userID)
+        REFERENCES users(userID),
     FOREIGN KEY (billingAddressID) 
         REFERENCES addresses(addressID)
 );
