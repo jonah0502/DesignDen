@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import styles from "@/styles/Table.module.css";
-import { useState } from "react";
+import reviewService from "../../services/reviews";
+import { useEffect, useState } from "react";
 
 const reviewHeaders = [
   "ReviewID",
@@ -9,58 +10,67 @@ const reviewHeaders = [
   "Stars",
   "Comment",
   "Date",
+  "LastUpdated",
   "Update",
   "Delete",
 ];
 
-const reviewData = [
-  {
-    id: 1,
-    productID: 1,
-    userID: 0,
-    stars: 4,
-    comment: "Great product",
-    date: new Date(2021, 6, 15).toISOString().split("T")[0],
-  },
-  {
-    id: 2,
-    productID: 4,
-    userID: 2,
-    stars: 3,
-    comment: "",
-    date: new Date(2021, 6, 17).toISOString().split("T")[0],
-  },
-  {
-    id: 3,
-    productID: 2,
-    userID: 4,
-    stars: 5,
-    comment: "I really like this template!",
-    date: new Date(2021, 6, 17).toISOString().split("T")[0],
-  },
-  {
-    id: 4,
-    productID: 1,
-    userID: 4,
-    stars: 4,
-    comment: "",
-    date: new Date(2021, 6, 18).toISOString().split("T")[0],
-  },
-];
-
 export default function ReviewPage() {
-  const [reviews, setReviews] = useState(reviewData);
+  const [reviews, setReviews] = useState([]);
+  const [reviewForm, setReviewForm] = useState({ reviewText: null });
+
+  useEffect(() => {
+    reviewService
+      .getAll()
+      .then((response) => {
+        setReviews(response);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  const addReview = (event) => {
+    event.preventDefault();
+    const today = new Date().toISOString().slice(0, 10);
+    let newReview = { ...reviewForm, datePosted: today, lastUpdated: today };
+    reviewService.create(newReview).then((response) => {
+      newReview = { ...newReview, reviewID: response.id };
+      setReviews(reviews.concat(newReview));
+      setReviewForm({ reviewText: null });
+    });
+  };
+
+  const updateReview = (index) => (event) => {
+    event.preventDefault();
+    const today = new Date().toISOString().slice(0, 10);
+    const newReview = { ...reviews[index], lastUpdated: today };
+    reviewService
+      .update(newReview.reviewID, newReview)
+      .then(() => {
+        setReviews(
+          reviews.map((review) =>
+            review.reviewID !== newReview.reviewID ? review : newReview
+          )
+        );
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const deleteReview = (index) => (event) => {
+    event.preventDefault();
+    reviewService
+      .remove(reviews[index].reviewID)
+      .then(() => {
+        const newReviews = [...reviews];
+        newReviews.splice(index, 1);
+        setReviews(newReviews);
+      })
+      .catch((e) => console.log(e));
+  };
 
   const handleRowChange = (index) => (event) => {
     const { name, value } = event.target;
     const newReviews = [...reviews];
     newReviews[index][name] = value;
-    setReviews(newReviews);
-  };
-
-  const handleRowDelete = (index) => (event) => {
-    const newReviews = [...reviews];
-    newReviews.splice(index, 1);
     setReviews(newReviews);
   };
 
@@ -80,8 +90,8 @@ export default function ReviewPage() {
           </thead>
           <tbody>
             {reviews.map((review, index) => (
-              <tr key={review.id}>
-                <td>{review.id}</td>
+              <tr key={review.reviewID}>
+                <td>{review.reviewID}</td>
                 <td>{review.productID}</td>
                 <td>{review.userID}</td>
                 <td>
@@ -97,24 +107,32 @@ export default function ReviewPage() {
                 <td>
                   <input
                     type="text"
-                    name="comment"
-                    value={review.comment}
+                    name="reviewText"
+                    value={review.reviewText || ""}
                     onChange={handleRowChange(index)}
                   />
                 </td>
                 <td>
                   <input
                     type="date"
-                    name="date"
-                    value={review.date}
+                    name="datePosted"
+                    value={review.datePosted}
                     onChange={handleRowChange(index)}
                   />
                 </td>
                 <td>
-                  <button>Update</button>
+                  <input
+                    type="date"
+                    name="lastUpdated"
+                    value={review.lastUpdated}
+                    onChange={handleRowChange(index)}
+                  />
                 </td>
                 <td>
-                  <button onClick={handleRowDelete(index)}>Delete</button>
+                  <button onClick={updateReview(index)}>Update</button>
+                </td>
+                <td>
+                  <button onClick={deleteReview(index)}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -125,13 +143,44 @@ export default function ReviewPage() {
       <h3>Add new review</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
-          <input type="text" placeholder="ProductID" />
-          <input type="text" placeholder="UserID" />
-          <input type="number" min="0" max="5" placeholder="Stars" />
-          <textarea placeholder="Comment" rows="3" cols="50" />
+          <input
+            type="text"
+            placeholder="ProductID"
+            value={reviewForm.productID || ""}
+            onChange={(e) =>
+              setReviewForm({ ...reviewForm, productID: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="UserID"
+            value={reviewForm.userID || ""}
+            onChange={(e) =>
+              setReviewForm({ ...reviewForm, userID: e.target.value })
+            }
+          />
+          <input
+            type="number"
+            min="0"
+            max="5"
+            placeholder="Stars"
+            value={reviewForm.stars || ""}
+            onChange={(e) =>
+              setReviewForm({ ...reviewForm, stars: e.target.value })
+            }
+          />
+          <textarea
+            placeholder="Comment"
+            rows="3"
+            cols="50"
+            value={reviewForm.reviewText || ""}
+            onChange={(e) =>
+              setReviewForm({ ...reviewForm, reviewText: e.target.value })
+            }
+          />
         </div>
         <div>
-          <button>Add</button>
+          <button onClick={addReview}>Add</button>
         </div>
       </form>
     </Layout>
