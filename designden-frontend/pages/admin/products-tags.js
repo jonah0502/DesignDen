@@ -1,68 +1,52 @@
 import Layout from "@/components/Layout";
 import styles from "@/styles/Table.module.css";
-import { useState } from "react";
+import productService from "../../services/products";
+import { useEffect, useState } from "react";
 
-const headers = ["ProductID", "TagID", "Update", "Delete"];
-
-const data = [
-  {
-    productID: 1,
-    tagID: 1,
-  },
-  {
-    productID: 1,
-    tagID: 2,
-  },
-  {
-    productID: 1,
-    tagID: 4,
-  },
-  {
-    productID: 2,
-    tagID: 2,
-  },
-  {
-    productID: 2,
-    tagID: 3,
-  },
-  {
-    productID: 3,
-    tagID: 2,
-  },
-  {
-    productID: 3,
-    tagID: 5,
-  },
-  {
-    productID: 4,
-    tagID: 6,
-  },
-  {
-    productID: 5,
-    tagID: 4,
-  },
-];
+const headers = ["ProductID", "TagID", "Delete"];
 
 export default function ProductTagsPage() {
-  const [prodTags, setProdTags] = useState(data);
+  const [prodTags, setProdTags] = useState([]);
   const [prodInput, setProdInput] = useState("");
   const [tagInput, setTagInput] = useState("");
 
-  const handleRowAdd = (event) => {
+  useEffect(() => {
+    productService
+      .getAllProductTags()
+      .then((response) => {
+        setProdTags(response);
+      })
+      .catch((e) => console.log(e));
+  });
+
+  const addProductTag = (event) => {
     event.preventDefault();
-    setProdTags(prodTags.concat({ productID: prodInput, tagID: tagInput }));
+    productService
+      .createProductTag(prodInput, tagInput)
+      .then((response) => {
+        console.log(response);
+        setProdTags(prodTags.concat({ productID: prodInput, tagID: tagInput }));
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const deleteProductTag = (index) => (event) => {
+    event.preventDefault();
+    productService
+      .removeProductTag(prodTags[index].productID, prodTags[index].tagID)
+      .then((response) => {
+        console.log(response);
+        const newProdTags = [...prodTags];
+        newProdTags.splice(index, 1);
+        setProdTags(newProdTags);
+      })
+      .catch((e) => console.log(e));
   };
 
   const handleRowChange = (index) => (event) => {
     const { name, value } = event.target;
     const newProdTags = [...prodTags];
     newProdTags[index][name] = value;
-    setProdTags(newProdTags);
-  };
-
-  const handleRowDelete = (index) => (event) => {
-    const newProdTags = [...prodTags];
-    newProdTags.splice(index, 1);
     setProdTags(newProdTags);
   };
 
@@ -78,7 +62,7 @@ export default function ProductTagsPage() {
     <Layout>
       <h1>Products_Tags</h1>
       <p>Represents the tags associated with each product</p>
-      <p>Supported operations: Create, Read, Update, Delete</p>
+      <p>Supported operations: Create, Read, Delete</p>
       <br />
       <div className={styles.tableContainer}>
         <table>
@@ -92,27 +76,10 @@ export default function ProductTagsPage() {
           <tbody>
             {prodTags.map((p, index) => (
               <tr key={`${p.productID}-${p.tagID}`}>
+                <td>{p.productID}</td>
+                <td>{p.tagID}</td>
                 <td>
-                  <input
-                    type="number"
-                    name="productID"
-                    value={p.productID}
-                    onChange={handleRowChange(index)}
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    name="tagID"
-                    value={p.tagID}
-                    onChange={handleRowChange(index)}
-                  />
-                </td>
-                <td>
-                  <button>Update</button>
-                </td>
-                <td>
-                  <button onClick={handleRowDelete(index)}>Delete</button>
+                  <button onClick={deleteProductTag(index)}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -134,7 +101,7 @@ export default function ProductTagsPage() {
           value={tagInput}
           onChange={handleTagChange}
         />
-        <button onSubmit={handleRowAdd}>Add</button>
+        <button onClick={addProductTag}>Add</button>
       </form>
     </Layout>
   );
