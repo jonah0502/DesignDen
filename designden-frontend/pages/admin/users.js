@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import styles from "@/styles/Table.module.css";
-import { useState } from "react";
+import userService from "../../services/users.js";
+import { useEffect, useState } from "react";
 
 const userHeaders = [
   "UserID",
@@ -13,58 +14,45 @@ const userHeaders = [
   "Update",
 ];
 
-const usersData = [
-  {
-    id: 1,
-    addressID: 1,
-    firstName: "Alice",
-    lastName: "Baker",
-    email: "abaker@example.com",
-    birthdate: new Date(1994, 4, 25).toISOString().split("T")[0],
-    storeCredits: 100,
-  },
-  {
-    id: 2,
-    addressID: 2,
-    firstName: "Bob",
-    lastName: "Smith",
-    email: "bsmith@example.com",
-    birthdate: new Date(1990, 9, 7).toISOString().split("T")[0],
-    storeCredits: 70,
-  },
-  {
-    id: 3,
-    addressID: "null",
-    firstName: "Carol",
-    lastName: "Henderson",
-    email: "chenderson@example.com",
-    birthdate: new Date(1985, 2, 27).toISOString().split("T")[0],
-    storeCredits: 0,
-  },
-  {
-    id: 4,
-    addressID: 3,
-    firstName: "David",
-    lastName: "Kim",
-    email: "dkim@example.com",
-    birthdate: new Date(1992, 11, 12).toISOString().split("T")[0],
-    storeCredits: 40,
-  },
-  {
-    id: 5,
-    addressID: "null",
-    firstName: "Eve",
-    lastName: "Walker",
-    email: "ewalker@example.com",
-    birthdate: new Date(1997, 7, 14).toISOString().split("T")[0],
-    storeCredits: 400,
-  },
-];
-
 export default function UsersPage() {
-  const [users, setUsers] = useState(usersData);
+  const [users, setUsers] = useState([]);
+  const [userForm, setUserForm] = useState({ addressID: null });
 
+  // get the users from database on first page load
+  useEffect(() => {
+    userService.getAll().then((data) => setUsers(data));
+  }, []);
+
+  // add a new user on form button click
+  const addUser = (event) => {
+    event.preventDefault();
+    console.log(userForm);
+    userService
+      .create(userForm)
+      .then((response) => {
+        console.log(response);
+        let newUser = { ...userForm, userID: response.id };
+        setUsers(users.concat(newUser));
+        setUserForm({ addressID: null });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // update user on update button click
+  const updateUser = (index) => (event) => {
+    event.preventDefault();
+    const user = users[index];
+    userService
+      .update(user.userID, user)
+      .then(console.log("successful update"))
+      .catch((error) => console.log(error));
+  };
+
+  // handle input changes for each row
   const handleRowChange = (index) => (event) => {
+    event.preventDefault();
     const { name, value } = event.target;
     const newUsers = [...users];
     newUsers[index][name] = value;
@@ -87,13 +75,13 @@ export default function UsersPage() {
           </thead>
           <tbody>
             {users.map((user, index) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
+              <tr key={user.userID}>
+                <td>{user.userID}</td>
                 <td>
                   <input
                     type="number"
                     name="addressID"
-                    value={user.addressID}
+                    value={user.addressID || ""}
                     placeholder="null"
                     onChange={handleRowChange(index)}
                   />
@@ -126,7 +114,7 @@ export default function UsersPage() {
                   <input
                     type="date"
                     name="birthdate"
-                    value={user.birthdate}
+                    value={user.birthDate}
                     onChange={handleRowChange(index)}
                   />
                 </td>
@@ -139,7 +127,7 @@ export default function UsersPage() {
                   />
                 </td>
                 <td>
-                  <button>Update</button>
+                  <button onClick={updateUser(index)}>Update</button>
                 </td>
               </tr>
             ))}
@@ -150,15 +138,49 @@ export default function UsersPage() {
       <h3>Add new user</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
-          <input type="text" placeholder="FirstName" />
-          <input type="text" placeholder="LastName" />
-          <input type="email" placeholder="Email" />
-          <input type="text" placeholder="Password" />
-          <input type="date" />
-          <input type="number" min="0" placeholder="StoreCredits" />
+          <input
+            type="text"
+            placeholder="FirstName"
+            value={userForm.firstName || ""}
+            onChange={(e) =>
+              setUserForm({ ...userForm, firstName: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="LastName"
+            value={userForm.lastName || ""}
+            onChange={(e) =>
+              setUserForm({ ...userForm, lastName: e.target.value })
+            }
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={userForm.email || ""}
+            onChange={(e) =>
+              setUserForm({ ...userForm, email: e.target.value })
+            }
+          />
+          <input
+            type="date"
+            value={userForm.birthDate || ""}
+            onChange={(e) =>
+              setUserForm({ ...userForm, birthDate: e.target.value })
+            }
+          />
+          <input
+            type="number"
+            min="0"
+            placeholder="StoreCredits"
+            value={userForm.storeCredits || ""}
+            onChange={(e) =>
+              setUserForm({ ...userForm, storeCredits: e.target.value })
+            }
+          />
         </div>
         <div>
-          <button>Add</button>
+          <button onClick={addUser}>Add</button>
         </div>
       </form>
     </Layout>
