@@ -15,6 +15,7 @@ const userHeaders = [
 ];
 
 export default function UsersPage() {
+  // initalize state variables
   const [users, setUsers] = useState([]);
   const [userForm, setUserForm] = useState({ addressID: null });
 
@@ -23,7 +24,7 @@ export default function UsersPage() {
     userService.getAll().then((data) => setUsers(data));
   }, []);
 
-  // add a new user on form button click
+  // add a new user to database on form button click
   const addUser = (event) => {
     event.preventDefault();
     console.log(userForm);
@@ -40,7 +41,7 @@ export default function UsersPage() {
       });
   };
 
-  // update user on update button click
+  // update user in database on update button click
   const updateUser = (index) => (event) => {
     event.preventDefault();
     const user = users[index];

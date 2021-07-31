@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 const tagHeaders = ["TagID", "TagName", "Update", "Delete"];
 
 export default function TagsPage() {
+  // initalize state variables
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
 
+  // get all tags from database on first page load
   useEffect(() => {
     tagService
       .getAll()
@@ -18,6 +20,7 @@ export default function TagsPage() {
       .catch((e) => console.log(e));
   }, []);
 
+  // add tag to database on form button click
   const addTag = (event) => {
     event.preventDefault();
     tagService
@@ -29,6 +32,7 @@ export default function TagsPage() {
       .catch((e) => console.log(e));
   };
 
+  // update tag from database on row button click
   const updateTag = (index) => (event) => {
     event.preventDefault();
     tagService
@@ -39,6 +43,7 @@ export default function TagsPage() {
       .catch((e) => console.log(e));
   };
 
+  // delete tag from database on row button click
   const deleteTag = (index) => (event) => {
     event.preventDefault();
     tagService
@@ -51,6 +56,7 @@ export default function TagsPage() {
       .catch((e) => console.log(e));
   };
 
+  // handle input changes for each row
   const handleRowChange = (index) => (event) => {
     const { name, value } = event.target;
     const newTags = [...tags];
@@ -58,6 +64,7 @@ export default function TagsPage() {
     setTags(newTags);
   };
 
+  // handle new tag input changes
   const handleTagChange = (event) => {
     setTagInput(event.target.value);
   };

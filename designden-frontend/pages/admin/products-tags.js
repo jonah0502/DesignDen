@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 const headers = ["ProductID", "TagID", "Delete"];
 
 export default function ProductTagsPage() {
+  // initalize state variables
   const [prodTags, setProdTags] = useState([]);
   const [prodInput, setProdInput] = useState("");
   const [tagInput, setTagInput] = useState("");
 
+  // get all product tags on first page load
   useEffect(() => {
     productService
       .getAllProductTags()
@@ -19,6 +21,7 @@ export default function ProductTagsPage() {
       .catch((e) => console.log(e));
   });
 
+  // add a new product tag on button click
   const addProductTag = (event) => {
     event.preventDefault();
     productService
@@ -30,6 +33,7 @@ export default function ProductTagsPage() {
       .catch((e) => console.log(e));
   };
 
+  // delete a product tag on button click
   const deleteProductTag = (index) => (event) => {
     event.preventDefault();
     productService
@@ -43,17 +47,12 @@ export default function ProductTagsPage() {
       .catch((e) => console.log(e));
   };
 
-  const handleRowChange = (index) => (event) => {
-    const { name, value } = event.target;
-    const newProdTags = [...prodTags];
-    newProdTags[index][name] = value;
-    setProdTags(newProdTags);
-  };
-
+  // keep track of productID input state
   const handleProdChange = (event) => {
     setProdInput(event.target.value);
   };
 
+  // keep track of tagID input state
   const handleTagChange = (event) => {
     setTagInput(event.target.value);
   };

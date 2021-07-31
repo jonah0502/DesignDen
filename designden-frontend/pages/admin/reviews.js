@@ -16,9 +16,11 @@ const reviewHeaders = [
 ];
 
 export default function ReviewPage() {
+  // initalize state variables
   const [reviews, setReviews] = useState([]);
   const [reviewForm, setReviewForm] = useState({ reviewText: null });
 
+  // get all reviews from database on first page load
   useEffect(() => {
     reviewService
       .getAll()
@@ -28,6 +30,7 @@ export default function ReviewPage() {
       .catch((e) => console.log(e));
   }, []);
 
+  // add new review to database from button click
   const addReview = (event) => {
     event.preventDefault();
     const today = new Date().toISOString().slice(0, 10);
@@ -39,6 +42,7 @@ export default function ReviewPage() {
     });
   };
 
+  // update review from row button click
   const updateReview = (index) => (event) => {
     event.preventDefault();
     const today = new Date().toISOString().slice(0, 10);
@@ -55,6 +59,7 @@ export default function ReviewPage() {
       .catch((e) => console.log(e));
   };
 
+  // delete review from row button click
   const deleteReview = (index) => (event) => {
     event.preventDefault();
     reviewService
@@ -67,6 +72,7 @@ export default function ReviewPage() {
       .catch((e) => console.log(e));
   };
 
+  // handle input changes for each row
   const handleRowChange = (index) => (event) => {
     const { name, value } = event.target;
     const newReviews = [...reviews];
