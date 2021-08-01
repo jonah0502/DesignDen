@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Message from "@/components/Message";
 import styles from "@/styles/Table.module.css";
 import productService from "../../services/products";
 import { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ export default function ProductTagsPage() {
   const [prodTags, setProdTags] = useState([]);
   const [prodInput, setProdInput] = useState("");
   const [tagInput, setTagInput] = useState("");
+  const [message, setMessage] = useState({ text: null, isError: false });
 
   // get all product tags on first page load
   useEffect(() => {
@@ -19,7 +21,15 @@ export default function ProductTagsPage() {
         setProdTags(response);
       })
       .catch((e) => console.log(e));
-  });
+  }, []);
+
+  // outputs a success or error message to the screen
+  const displayMessage = (text, isError) => {
+    setMessage({ text: text, isError: isError });
+    setTimeout(() => {
+      setMessage({ text: null, isError: false });
+    }, 5000);
+  };
 
   // add a new product tag on button click
   const addProductTag = (event) => {
@@ -27,10 +37,19 @@ export default function ProductTagsPage() {
     productService
       .createProductTag(prodInput, tagInput)
       .then((response) => {
-        console.log(response);
         setProdTags(prodTags.concat({ productID: prodInput, tagID: tagInput }));
+        displayMessage(response, false);
       })
-      .catch((e) => console.log(e));
+      .catch((error) => {
+        let errMsg;
+        if (error.response) {
+          errMsg = error.response.data;
+        } else {
+          errMsg =
+            "Error: Unable to add tag to product, missing required fields.";
+        }
+        displayMessage(errMsg, true);
+      });
   };
 
   // delete a product tag on button click
@@ -39,12 +58,14 @@ export default function ProductTagsPage() {
     productService
       .removeProductTag(prodTags[index].productID, prodTags[index].tagID)
       .then((response) => {
-        console.log(response);
         const newProdTags = [...prodTags];
         newProdTags.splice(index, 1);
         setProdTags(newProdTags);
+        displayMessage(response, false);
       })
-      .catch((e) => console.log(e));
+      .catch((error) => {
+        displayMessage(error.response.data, true);
+      });
   };
 
   // keep track of productID input state
@@ -59,6 +80,7 @@ export default function ProductTagsPage() {
 
   return (
     <Layout>
+      <Message message={message.text} isError={message.isError} />
       <h1>Products_Tags</h1>
       <p>Represents the tags associated with each product</p>
       <p>Supported operations: Create, Read, Delete</p>
@@ -90,13 +112,13 @@ export default function ProductTagsPage() {
         <h3>Add a tag to a product</h3>
         <input
           type="text"
-          placeholder="ProductID"
+          placeholder="ProductID*"
           value={prodInput}
           onChange={handleProdChange}
         />
         <input
           type="text"
-          placeholder="TagID"
+          placeholder="TagID*"
           value={tagInput}
           onChange={handleTagChange}
         />

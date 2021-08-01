@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Message from "@/components/Message.js";
 import styles from "@/styles/Table.module.css";
 import reviewService from "../../services/reviews";
 import { useEffect, useState } from "react";
@@ -19,6 +20,7 @@ export default function ReviewPage() {
   // initalize state variables
   const [reviews, setReviews] = useState([]);
   const [reviewForm, setReviewForm] = useState({ reviewText: null });
+  const [message, setMessage] = useState({ text: null, isError: false });
 
   // get all reviews from database on first page load
   useEffect(() => {
@@ -30,16 +32,36 @@ export default function ReviewPage() {
       .catch((e) => console.log(e));
   }, []);
 
+  // outputs a success or error message to the screen
+  const displayMessage = (text, isError) => {
+    setMessage({ text: text, isError: isError });
+    setTimeout(() => {
+      setMessage({ text: null, isError: false });
+    }, 5000);
+  };
+
   // add new review to database from button click
   const addReview = (event) => {
     event.preventDefault();
     const today = new Date().toISOString().slice(0, 10);
     let newReview = { ...reviewForm, datePosted: today, lastUpdated: today };
-    reviewService.create(newReview).then((response) => {
-      newReview = { ...newReview, reviewID: response.id };
-      setReviews(reviews.concat(newReview));
-      setReviewForm({ reviewText: null });
-    });
+    reviewService
+      .create(newReview)
+      .then((response) => {
+        newReview = { ...newReview, reviewID: response.id };
+        setReviews(reviews.concat(newReview));
+        setReviewForm({ reviewText: null });
+        displayMessage(response.message, false);
+      })
+      .catch((error) => {
+        let errMsg;
+        if (error.response) {
+          errMsg = error.response.data;
+        } else {
+          errMsg = "Error: Unable to add review, missing required fields.";
+        }
+        displayMessage(errMsg, true);
+      });
   };
 
   // update review from row button click
@@ -49,14 +71,17 @@ export default function ReviewPage() {
     const newReview = { ...reviews[index], lastUpdated: today };
     reviewService
       .update(newReview.reviewID, newReview)
-      .then(() => {
+      .then((response) => {
         setReviews(
           reviews.map((review) =>
             review.reviewID !== newReview.reviewID ? review : newReview
           )
         );
+        displayMessage(response, false);
       })
-      .catch((e) => console.log(e));
+      .catch((error) => {
+        displayMessage(error.response.data, true);
+      });
   };
 
   // delete review from row button click
@@ -64,12 +89,15 @@ export default function ReviewPage() {
     event.preventDefault();
     reviewService
       .remove(reviews[index].reviewID)
-      .then(() => {
+      .then((response) => {
         const newReviews = [...reviews];
         newReviews.splice(index, 1);
         setReviews(newReviews);
+        displayMessage(response, false);
       })
-      .catch((e) => console.log(e));
+      .catch((error) => {
+        displayMessage(error.response.data, true);
+      });
   };
 
   // handle input changes for each row
@@ -82,6 +110,7 @@ export default function ReviewPage() {
 
   return (
     <Layout>
+      <Message message={message.text} isError={message.isError} />
       <h1>Reviews</h1>
       <p>Supported operations: Create, Read, Update, Delete</p>
       <br />
@@ -151,7 +180,7 @@ export default function ReviewPage() {
         <div className={styles.inputContainer}>
           <input
             type="text"
-            placeholder="ProductID"
+            placeholder="ProductID*"
             value={reviewForm.productID || ""}
             onChange={(e) =>
               setReviewForm({ ...reviewForm, productID: e.target.value })
@@ -159,7 +188,7 @@ export default function ReviewPage() {
           />
           <input
             type="text"
-            placeholder="UserID"
+            placeholder="UserID*"
             value={reviewForm.userID || ""}
             onChange={(e) =>
               setReviewForm({ ...reviewForm, userID: e.target.value })
@@ -169,7 +198,7 @@ export default function ReviewPage() {
             type="number"
             min="0"
             max="5"
-            placeholder="Stars"
+            placeholder="Stars*"
             value={reviewForm.stars || ""}
             onChange={(e) =>
               setReviewForm({ ...reviewForm, stars: e.target.value })

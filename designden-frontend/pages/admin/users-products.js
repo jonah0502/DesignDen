@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Message from "@/components/Message.js";
 import styles from "@/styles/Table.module.css";
 import userService from "../../services/users.js";
 import { useEffect, useState } from "react";
@@ -6,9 +7,12 @@ import { useEffect, useState } from "react";
 const cartHeaders = ["UserID", "ProductID", "Quantity", "Delete"];
 
 export default function UsersProductsPage() {
+  // initalize state variables
   const [cartItems, setCartItems] = useState([]);
   const [cartForm, setCartForm] = useState({});
+  const [message, setMessage] = useState({ text: null, isError: false });
 
+  // get all cartItems from database on first page load
   useEffect(() => {
     userService
       .getAllCarts()
@@ -16,15 +20,33 @@ export default function UsersProductsPage() {
       .catch((error) => console.log(error));
   }, []);
 
+  // outputs a success or error message to the screen
+  const displayMessage = (text, isError) => {
+    setMessage({ text: text, isError: isError });
+    setTimeout(() => {
+      setMessage({ text: null, isError: false });
+    }, 5000);
+  };
+
   const addCartItem = (event) => {
     event.preventDefault();
     userService
       .addToCart(cartForm.userID, cartForm.productID, cartForm.quantity)
-      .then(() => {
+      .then((response) => {
         setCartItems([...cartItems, cartForm]);
         setCartForm({});
+        displayMessage(response, false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        let errMsg;
+        if (error.response) {
+          errMsg = error.response.data;
+        } else {
+          errMsg =
+            "Error: Unable to add item to cart, missing required fields.";
+        }
+        displayMessage(errMsg, true);
+      });
   };
 
   const deleteCartItem = (index) => (event) => {
@@ -35,12 +57,16 @@ export default function UsersProductsPage() {
         const newCartItems = [...cartItems];
         newCartItems.splice(index, 1);
         setCartItems(newCartItems);
+        displayMessage(response, false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        displayMessage(error.response.data, true);
+      });
   };
 
   return (
     <Layout>
+      <Message message={message.text} isError={message.isError} />
       <h1>Users_Products</h1>
       <p>Represents the products currently in the users cart</p>
       <p>Supported operations: Create, Read, Delete</p>
@@ -74,7 +100,7 @@ export default function UsersProductsPage() {
         <div className={styles.inputContainer}>
           <input
             type="text"
-            placeholder="UserID"
+            placeholder="UserID*"
             value={cartForm.userID || ""}
             onChange={(e) =>
               setCartForm({ ...cartForm, userID: e.target.value })
@@ -82,7 +108,7 @@ export default function UsersProductsPage() {
           />
           <input
             type="text"
-            placeholder="ProductID"
+            placeholder="ProductID*"
             value={cartForm.productID || ""}
             onChange={(e) =>
               setCartForm({ ...cartForm, productID: e.target.value })
@@ -91,7 +117,7 @@ export default function UsersProductsPage() {
           <input
             type="number"
             min="0"
-            placeholder="Quantity"
+            placeholder="Quantity*"
             value={cartForm.quantity || ""}
             onChange={(e) =>
               setCartForm({ ...cartForm, quantity: e.target.value })

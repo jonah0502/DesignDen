@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Message from "@/components/Message.js";
 import styles from "@/styles/Table.module.css";
 import tagService from "../../services/tags.js";
 import { useEffect, useState } from "react";
@@ -9,6 +10,7 @@ export default function TagsPage() {
   // initalize state variables
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
+  const [message, setMessage] = useState({ text: null, isError: false });
 
   // get all tags from database on first page load
   useEffect(() => {
@@ -20,6 +22,14 @@ export default function TagsPage() {
       .catch((e) => console.log(e));
   }, []);
 
+  // outputs a success or error message to the screen
+  const displayMessage = (text, isError) => {
+    setMessage({ text: text, isError: isError });
+    setTimeout(() => {
+      setMessage({ text: null, isError: false });
+    }, 5000);
+  };
+
   // add tag to database on form button click
   const addTag = (event) => {
     event.preventDefault();
@@ -28,8 +38,17 @@ export default function TagsPage() {
       .then((response) => {
         setTags(tags.concat({ tagID: response.id, tagName: tagInput }));
         setTagInput("");
+        displayMessage(response.message, false);
       })
-      .catch((e) => console.log(e));
+      .catch((error) => {
+        let errMsg;
+        if (error.response) {
+          errMsg = error.response.data;
+        } else {
+          errMsg = "Error: Unable to add tag, missing required field.";
+        }
+        displayMessage(errMsg, true);
+      });
   };
 
   // update tag from database on row button click
@@ -38,9 +57,11 @@ export default function TagsPage() {
     tagService
       .update(tags[index].tagID, tags[index])
       .then((response) => {
-        console.log(response);
+        displayMessage(response, false);
       })
-      .catch((e) => console.log(e));
+      .catch((error) => {
+        displayMessage(error.response.data, true);
+      });
   };
 
   // delete tag from database on row button click
@@ -48,12 +69,15 @@ export default function TagsPage() {
     event.preventDefault();
     tagService
       .remove(tags[index].tagID)
-      .then(() => {
+      .then((response) => {
         const newTags = [...tags];
         newTags.splice(index, 1);
         setTags(newTags);
+        displayMessage(response, false);
       })
-      .catch((e) => console.log(e));
+      .catch((error) => {
+        displayMessage(error.response.data, true);
+      });
   };
 
   // handle input changes for each row
@@ -71,6 +95,7 @@ export default function TagsPage() {
 
   return (
     <Layout>
+      <Message message={message.text} isError={message.isError} />
       <h1>Tags</h1>
       <p>Supported operations: Create, Read, Update, Delete</p>
       <br />
@@ -111,7 +136,7 @@ export default function TagsPage() {
         <h3>Add a new tag</h3>
         <input
           type="text"
-          placeholder="TagName"
+          placeholder="TagName*"
           value={tagInput}
           onChange={handleTagChange}
         />

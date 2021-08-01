@@ -41,14 +41,19 @@ export default function UsersPage() {
     userService
       .create(userForm)
       .then((response) => {
-        console.log(response);
         let newUser = { ...userForm, userID: response.id };
         setUsers(users.concat(newUser));
         setUserForm({ addressID: null });
         displayMessage(response.message, false);
       })
       .catch((error) => {
-        displayMessage(error.response.data, true);
+        let errMsg;
+        if (error.response) {
+          errMsg = error.response.data;
+        } else {
+          errMsg = "Error: Unable to add user, missing required fields.";
+        }
+        displayMessage(errMsg, true);
       });
   };
 
@@ -59,7 +64,7 @@ export default function UsersPage() {
     userService
       .update(user.userID, user)
       .then((response) => {
-        displayMessage(response.message, false);
+        displayMessage(response, false);
       })
       .catch((error) => {
         displayMessage(error.response.data, true);
@@ -157,7 +162,7 @@ export default function UsersPage() {
         <div className={styles.inputContainer}>
           <input
             type="text"
-            placeholder="FirstName"
+            placeholder="FirstName*"
             value={userForm.firstName || ""}
             onChange={(e) =>
               setUserForm({ ...userForm, firstName: e.target.value })
@@ -165,7 +170,7 @@ export default function UsersPage() {
           />
           <input
             type="text"
-            placeholder="LastName"
+            placeholder="LastName*"
             value={userForm.lastName || ""}
             onChange={(e) =>
               setUserForm({ ...userForm, lastName: e.target.value })
@@ -173,7 +178,7 @@ export default function UsersPage() {
           />
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Email*"
             value={userForm.email || ""}
             onChange={(e) =>
               setUserForm({ ...userForm, email: e.target.value })
@@ -189,7 +194,7 @@ export default function UsersPage() {
           <input
             type="number"
             min="0"
-            placeholder="StoreCredits"
+            placeholder="StoreCredits*"
             value={userForm.storeCredits || ""}
             onChange={(e) =>
               setUserForm({ ...userForm, storeCredits: e.target.value })
