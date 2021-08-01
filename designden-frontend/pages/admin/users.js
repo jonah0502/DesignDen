@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Message from "@/components/Message.js";
 import styles from "@/styles/Table.module.css";
 import userService from "../../services/users.js";
 import { useEffect, useState } from "react";
@@ -18,11 +19,20 @@ export default function UsersPage() {
   // initalize state variables
   const [users, setUsers] = useState([]);
   const [userForm, setUserForm] = useState({ addressID: null });
+  const [message, setMessage] = useState({ text: null, isError: false });
 
   // get the users from database on first page load
   useEffect(() => {
     userService.getAll().then((data) => setUsers(data));
   }, []);
+
+  // outputs a success or error message to the screen
+  const displayMessage = (text, isError) => {
+    setMessage({ text: text, isError: isError });
+    setTimeout(() => {
+      setMessage({ text: null, isError: false });
+    }, 5000);
+  };
 
   // add a new user to database on form button click
   const addUser = (event) => {
@@ -35,9 +45,10 @@ export default function UsersPage() {
         let newUser = { ...userForm, userID: response.id };
         setUsers(users.concat(newUser));
         setUserForm({ addressID: null });
+        displayMessage(response.message, false);
       })
       .catch((error) => {
-        console.log(error);
+        displayMessage(error.response.data, true);
       });
   };
 
@@ -47,8 +58,12 @@ export default function UsersPage() {
     const user = users[index];
     userService
       .update(user.userID, user)
-      .then(console.log("successful update"))
-      .catch((error) => console.log(error));
+      .then((response) => {
+        displayMessage(response.message, false);
+      })
+      .catch((error) => {
+        displayMessage(error.response.data, true);
+      });
   };
 
   // handle input changes for each row
@@ -62,6 +77,7 @@ export default function UsersPage() {
 
   return (
     <Layout>
+      <Message message={message.text} isError={message.isError} />
       <h1>Users</h1>
       <p>Supported operations: Create, Read, Update</p>
       <br />
