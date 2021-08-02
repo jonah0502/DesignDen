@@ -1,42 +1,64 @@
 import Layout from "@/components/Layout";
 import styles from "@/styles/Table.module.css";
+import orderService from "../../services/orders";
+import { useEffect, useState } from "react";
+
+
 
 const headers = ["OrderID", "ProductID", "Quantity"];
 
-const data = [
-  {
-    orderID: 1,
-    productID: 2,
-    quantity: 1,
-  },
-  {
-    orderID: 1,
-    productID: 3,
-    quantity: 1,
-  },
-  {
-    orderID: 2,
-    productID: 1,
-    quantity: 3,
-  },
-  {
-    orderID: 3,
-    productID: 2,
-    quantity: 1,
-  },
-  {
-    orderID: 3,
-    productID: 4,
-    quantity: 1,
-  },
-  {
-    orderID: 3,
-    productID: 5,
-    quantity: 1,
-  },
-];
-
 export default function ProductOrdersPage() {
+  // initalize state variables
+  const [POs, setPOs] = useState([]);
+  const [POForm, setPOForm] = useState({ });
+  const [message, setMessage] = useState({ text: null, isError: false });
+
+ // get all reviews from database on first page load
+ useEffect(() => {
+  orderService
+    .getAllPO()
+    .then((response) => {
+      setPOs(response);
+    })
+    .catch((e) => console.log(e));
+}, []);
+
+// outputs a success or error message to the screen
+const displayMessage = (text, isError) => {
+  setMessage({ text: text, isError: isError });
+  setTimeout(() => {
+    setMessage({ text: null, isError: false });
+  }, 5000);
+};
+
+  // add new review to database from button click
+  const addPO = (event) => {
+    event.preventDefault();
+    const today = new Date().toISOString().slice(0, 10);
+
+    let newPO = { ...POForm };
+    
+    orderService
+      .createPO(newPO)
+      .then((response) => {
+        console.log(response);
+        newPO = { ...newPO};
+        setPOs(POs.concat(newPO));
+        setPOForm({});
+        displayMessage(response.message, false);
+      })
+      .catch((error) => {
+        let errMsg;
+        if (error.response) {
+          errMsg = error.response.data;
+        } else {
+          errMsg = "Error: Unable to add address, missing required fields.";
+        }
+        displayMessage(errMsg, true);
+      });
+  };
+
+
   return (
     <Layout>
       <h1>Products_Orders</h1>
@@ -53,7 +75,7 @@ export default function ProductOrdersPage() {
             </tr>
           </thead>
           <tbody>
-            {data.map((item) => (
+            {POs.map((item) => (
               <tr key={`${item.orderID}-${item.productID}`}>
                 <td>{item.orderID}</td>
                 <td>{item.productID}</td>
@@ -67,12 +89,28 @@ export default function ProductOrdersPage() {
       <h3>Add a product to an order</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
-          <input type="text" placeholder="OrderID" />
-          <input type="text" placeholder="ProductID" />
-          <input type="number" min="0" placeholder="Quantity" />
+          <input type="text" 
+          placeholder="OrderID"
+          value={POForm.orderID || ""}
+          onChange={(e) =>
+            setPOForm({ ...POForm, orderID: e.target.value })
+          } />
+          <input type="text" 
+          placeholder="ProductID"
+          value={POForm.productID || ""}
+          onChange={(e) =>
+            setPOForm({ ...POForm, productID: e.target.value })
+          } />
+          <input type="number" 
+          min="0" 
+          placeholder="Quantity"
+          value={POForm.quantity || ""}
+          onChange={(e) =>
+            setPOForm({ ...POForm, quantity: e.target.value })
+          } />
         </div>
         <div>
-          <button>Add</button>
+          <button onClick={addPO}>Add</button>
         </div>
       </form>
     </Layout>

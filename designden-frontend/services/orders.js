@@ -56,7 +56,7 @@ const getProductsUser = async (id) => {
 
 // create a new order
 const createPO = async (newPO) => {
-    const response = await axios.post(newBaseUrl, newPO);
+    const response = await axios.post(`${newBaseUrl}/`, newPO);
     return response.data;
   };
   

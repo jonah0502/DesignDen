@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
-import { useState } from "react";
 import styles from "@/styles/Table.module.css";
+import productsService from "../../services/products.js";
+import { useEffect, useState } from "react";
 
 const productHeaders = [
   "ProductID",
@@ -14,62 +15,60 @@ const productHeaders = [
   "Update",
 ];
 
-const data = [
-  {
-    id: 1,
-    userID: 1,
-    name: "Cryptocurrency Web App React JS Template",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    imageURL: "/images/sample/template-1.jpg",
-    price: 60,
-    datePosted: new Date(2021, 5, 9).toISOString().split("T")[0],
-    lastUpdated: new Date(2021, 5, 9).toISOString().split("T")[0],
-  },
-  {
-    id: 2,
-    userID: 1,
-    name: "Custom Interactive Map jQuery Plugin",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    imageURL: "/images/sample/template-2.jpg",
-    price: 30,
-    datePosted: new Date(2021, 5, 9).toISOString().split("T")[0],
-    lastUpdated: new Date(2021, 5, 9).toISOString().split("T")[0],
-  },
-  {
-    id: 3,
-    userID: 1,
-    name: "React Personal Portfolio Template + React Hooks",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    imageURL: "/images/sample/template-3.jpg",
-    price: 50,
-    datePosted: new Date(2021, 5, 9).toISOString().split("T")[0],
-    lastUpdated: new Date(2021, 5, 9).toISOString().split("T")[0],
-  },
-  {
-    id: 4,
-    userID: 1,
-    name: "Multipurpose eCommerce WordPress Theme",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    imageURL: "/images/sample/template-4.jpg",
-    price: 22,
-    datePosted: new Date(2021, 5, 9).toISOString().split("T")[0],
-    lastUpdated: new Date(2021, 5, 9).toISOString().split("T")[0],
-  },
-  {
-    id: 5,
-    userID: 1,
-    name: "Marketing HTML Landing Page",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    imageURL: "/images/default_image.jpg",
-    price: 47,
-    datePosted: new Date(2021, 5, 9).toISOString().split("T")[0],
-    lastUpdated: new Date(2021, 5, 9).toISOString().split("T")[0],
-  },
-];
+
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState(data);
+  const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("");
+  const [productsForm, setProductsForm] = useState({});
+  const [message, setMessage] = useState({ text: null, isError: false });
+
+
+  // get all reviews from database on first page load
+  useEffect(() => {
+    productsService
+      .getAll()
+      .then((response) => {
+        setProducts(response);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+// outputs a success or error message to the screen
+const displayMessage = (text, isError) => {
+  setMessage({ text: text, isError: isError });
+  setTimeout(() => {
+    setMessage({ text: null, isError: false });
+  }, 5000);
+};
+
+  // add new review to database from button click
+  const addProduct = (event) => {
+    event.preventDefault();
+    const today = new Date().toISOString().slice(0, 10);
+
+    let newProduct = { ...productsForm, datePosted: today, lastUpdated: today };
+    
+    productsService
+      .create(newProduct)
+      .then((response) => {
+        console.log(response);
+        newProduct = { ...newProduct, productID: response.id };
+        setProducts(products.concat(newProduct));
+        setProductsForm({});
+        displayMessage(response.message, false);
+      })
+      .catch((error) => {
+        let errMsg;
+        if (error.response) {
+          errMsg = error.response.data;
+        } else {
+          errMsg = "Error: Unable to add address, missing required fields.";
+        }
+        displayMessage(errMsg, true);
+      });
+  };
+
 
   const handleRowChange = (index) => (event) => {
     const { name, value } = event.target;
@@ -78,21 +77,37 @@ export default function ProductsPage() {
     setProducts(newProducts);
   };
 
-  const handleSearch = (event) => {
-    setFilter(event.target.value);
-  };
+    // update review from row button click
+    const updateProduct = (index) => (event) => {
+      event.preventDefault();
+      const today = new Date().toISOString().slice(0, 10);
+      const newProduct = { ...products[index], lastUpdated: today };
+      productsService
+        .update(newProduct.productID, newProduct)
+        .then((response) => {
+          setProducts(
+            products.map((product) =>
+            product.productID !== newProduct.productID ? product : newProduct
+            )
+          );
+          displayMessage(response, false);
+        })
+        .catch((error) => {
+          displayMessage(error.response.data, true);
+        });
+    };
 
   return (
     <Layout>
       <h1>Products</h1>
       <p>Supported operations: Create, Read, Update</p>
       <br />
-      <input
+      {/*<input
         type="text"
         value={filter}
         placeholder="Search by Name"
         onChange={handleSearch}
-      />
+      />*/}
       <div className={styles.tableContainer}>
         <table>
           <thead>
@@ -103,13 +118,9 @@ export default function ProductsPage() {
             </tr>
           </thead>
           <tbody>
-            {products
-              .filter((product) =>
-                product.name.toLowerCase().includes(filter.toLowerCase())
-              )
-              .map((product, index) => (
-                <tr key={product.id}>
-                  <td>{product.id}</td>
+            {products.map((product, index) => (
+                <tr key={product.productID}>
+                  <td>{product.productID}</td>
                   <td>{product.userID} </td>
                   <td>
                     <input
@@ -160,7 +171,7 @@ export default function ProductsPage() {
                     />
                   </td>
                   <td>
-                    <button>Update</button>
+                    <button onClick={updateProduct(index)}>Update</button>
                   </td>
                 </tr>
               ))}
@@ -171,14 +182,46 @@ export default function ProductsPage() {
       <h3>Add new product</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
-          <input type="text" placeholder="UserID" />
-          <input type="text" placeholder="Name" />
-          <textarea placeholder="Description" rows="3" cols="50" />
-          <input type="number" min="0" placeholder="Price" />
-          <input type="text" placeholder="Image URL" />
+          <input type="text" 
+          placeholder="UserID" 
+          value={productsForm.userID || ""}
+          onChange={(e) =>
+            setProductsForm({ ...productsForm, userID: e.target.value })
+          }/>
+          <input type="text" 
+          placeholder="Name"
+          value={productsForm.name || ""}
+          onChange={(e) =>
+            setProductsForm({ ...productsForm, name: e.target.value })
+          } />
+          <textarea 
+          placeholder="Description" 
+          rows="3" 
+          cols="50"
+          value={productsForm.description || ""}
+          onChange={(e) =>
+            setProductsForm({ ...productsForm, description: e.target.value })
+          } />
+          <input 
+          type="number" 
+          min="0" 
+          placeholder="Price" 
+          value={productsForm.price || ""}
+          onChange={(e) =>
+            setProductsForm({ ...productsForm, price: e.target.value })
+          }
+          />
+          <input 
+          type="text" 
+          placeholder="Image URL"
+          value={productsForm.imageURL || ""}
+          onChange={(e) =>
+            setProductsForm({ ...productsForm, imageURL: e.target.value })
+          }
+          />
         </div>
         <div>
-          <button>Add</button>
+          <button onClick={addProduct}>Add</button>
         </div>
       </form>
     </Layout>
