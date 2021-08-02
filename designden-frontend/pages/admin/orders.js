@@ -19,6 +19,7 @@ export default function OrdersPage() {
   // initalize state variables
   const [orders, setOrders] = useState([]);
   const [ordersForm, setOrdersForm] = useState({});
+  const [message, setMessage] = useState({ text: null, isError: false });
 
   // get all reviews from database on first page load
   useEffect(() => {
@@ -29,6 +30,42 @@ export default function OrdersPage() {
       })
       .catch((e) => console.log(e));
   }, []);
+
+
+  // add new review to database from button click
+  const addOrder = (event) => {
+    event.preventDefault();
+    const today = new Date().toISOString().slice(0, 10);
+
+    let newOrder = { ...ordersForm, orderDate: today };
+    
+    ordersService
+      .create(newOrder)
+      .then((response) => {
+        console.log(response);
+        newOrder = { ...newOrder, orderID: response.id };
+        setOrders(orders.concat(newOrder));
+        setOrdersForm({});
+        displayMessage(response.message, false);
+      })
+      .catch((error) => {
+        let errMsg;
+        if (error.response) {
+          errMsg = error.response.data;
+        } else {
+          errMsg = "Error: Unable to add address, missing required fields.";
+        }
+        displayMessage(errMsg, true);
+      });
+  };
+
+  // outputs a success or error message to the screen
+  const displayMessage = (text, isError) => {
+    setMessage({ text: text, isError: isError });
+    setTimeout(() => {
+      setMessage({ text: null, isError: false });
+    }, 5000);
+  };
 
 
   return (
@@ -67,19 +104,42 @@ export default function OrdersPage() {
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
           <input type="text" 
-          placeholder="UserID"
+          placeholder="UserID*"
           value={ordersForm.userID || ""}
           onChange={(e) =>
-            setAddressForm({ ...ordersForm, userID: e.target.value })
+            setOrdersForm({ ...ordersForm, userID: e.target.value })
           }
           />
-          <input type="text" placeholder="AddressID" />
-          <input type="text" placeholder="ContactFirstName" />
-          <input type="text" placeholder="ContactLastName" />
-          <input type="text" placeholder="ContactEmail" />
+          <input type="text"
+          placeholder="AddressID*"
+          value={ordersForm.billingAddressID || ""}
+          onChange={(e) =>
+            setOrdersForm({ ...ordersForm, billingAddressID: e.target.value })
+          }
+           />
+          <input type="text"
+          placeholder="ContactFirstName*" 
+          value={ordersForm.firstName || ""}
+          onChange={(e) =>
+            setOrdersForm({ ...ordersForm, firstName: e.target.value })
+          }/>
+          <input type="text"
+          placeholder="ContactLastName*" 
+          value={ordersForm.lastName || ""}
+          onChange={(e) =>
+            setOrdersForm({ ...ordersForm, lastName: e.target.value })
+          }
+          />
+          <input type="text" 
+          placeholder="ContactEmail*"
+          value={ordersForm.email || ""}
+          onChange={(e) =>
+            setOrdersForm({ ...ordersForm, email: e.target.value })
+          }
+          />
         </div>
         <div>
-          <button>Add</button>
+          <button onClick={addOrder}>Add</button>
         </div>
       </form>
     </Layout>

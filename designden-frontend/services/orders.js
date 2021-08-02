@@ -31,7 +31,7 @@ const getOrdersUser = async (id) => {
 
 // create a new order
 const create = async (newOrder) => {
-  const response = await axios.post(baseUrl, newOrder);
+  const response = await axios.post(`${baseUrl}`, newOrder);
   return response.data;
 };
 
