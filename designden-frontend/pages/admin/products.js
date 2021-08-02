@@ -3,6 +3,7 @@ import styles from "@/styles/Table.module.css";
 import productsService from "../../services/products.js";
 import { useEffect, useState } from "react";
 import Message from "@/components/Message.js";
+import { useRouter } from 'next/router'
 
 const productHeaders = [
   "ProductID",
@@ -24,6 +25,7 @@ export default function ProductsPage() {
   const [productsForm, setProductsForm] = useState({});
   const [message, setMessage] = useState({ text: null, isError: false });
 
+  const router = useRouter()
 
   // get all reviews from database on first page load
   useEffect(() => {
@@ -77,6 +79,21 @@ const displayMessage = (text, isError) => {
     setProducts(newProducts);
   };
 
+  const updateSearch = (event) => {
+    setFilter(event.target.value);
+  };
+
+const handleSearch = (event) => {
+event.preventDefault();
+  productsService
+  .search(filter)
+  .then((response) => {
+    setProducts(response);
+  })
+  .catch((e) => console.log(e));
+
+};
+
     // update review from row button click
     const updateProduct = (index) => (event) => {
       event.preventDefault();
@@ -103,12 +120,17 @@ const displayMessage = (text, isError) => {
       <h1>Products</h1>
       <p>Supported operations: Create, Read, Update</p>
       <br />
-      {/*<input
+      <form>
+      <input
         type="text"
         value={filter}
         placeholder="Search by Name"
-        onChange={handleSearch}
-      />*/}
+        onChange={updateSearch}
+        name = "q"
+      />
+        <input type="submit" value="Submit" onClick={handleSearch} />
+      </form>
+
       <div className={styles.tableContainer}>
         <table>
           <thead>
