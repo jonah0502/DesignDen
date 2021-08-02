@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import styles from "@/styles/Table.module.css";
 import productsService from "../../services/products.js";
 import { useEffect, useState } from "react";
+import Message from "@/components/Message.js";
 
 const productHeaders = [
   "ProductID",
@@ -52,7 +53,6 @@ const displayMessage = (text, isError) => {
     productsService
       .create(newProduct)
       .then((response) => {
-        console.log(response);
         newProduct = { ...newProduct, productID: response.id };
         setProducts(products.concat(newProduct));
         setProductsForm({});
@@ -99,6 +99,7 @@ const displayMessage = (text, isError) => {
 
   return (
     <Layout>
+      <Message message={message.text} isError={message.isError} />
       <h1>Products</h1>
       <p>Supported operations: Create, Read, Update</p>
       <br />

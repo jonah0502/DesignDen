@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import styles from "@/styles/Table.module.css";
 import orderService from "../../services/orders";
 import { useEffect, useState } from "react";
+import Message from "@/components/Message.js";
 
 
 
@@ -34,14 +35,12 @@ const displayMessage = (text, isError) => {
   // add new review to database from button click
   const addPO = (event) => {
     event.preventDefault();
-    const today = new Date().toISOString().slice(0, 10);
 
     let newPO = { ...POForm };
     
     orderService
       .createPO(newPO)
       .then((response) => {
-        console.log(response);
         newPO = { ...newPO};
         setPOs(POs.concat(newPO));
         setPOForm({});
@@ -61,6 +60,7 @@ const displayMessage = (text, isError) => {
 
   return (
     <Layout>
+      <Message message={message.text} isError={message.isError} />
       <h1>Products_Orders</h1>
       <p>Represents the products associated with each order</p>
       <p>Supported operations: Create, Read</p>

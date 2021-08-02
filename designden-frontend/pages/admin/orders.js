@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import styles from "@/styles/Table.module.css";
 import ordersService from "../../services/orders.js";
 import { useEffect, useState } from "react";
+import Message from "@/components/Message.js";
 
 
 const orderHeaders = [
@@ -70,6 +71,7 @@ export default function OrdersPage() {
 
   return (
     <Layout>
+      <Message message={message.text} isError={message.isError} />
       <h1>Orders</h1>
       <p>Supported operations: Create, Read</p>
       <br />

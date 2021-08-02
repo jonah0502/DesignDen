@@ -64,11 +64,20 @@ export default function AddressesPage() {
   // update user in database on update button click
   const updateAddress = (index) => (event) => {
     event.preventDefault();
-    const address = addresses[index];
+    const newAddress = addresses[index];
     addressService
-      .update(address.addressID, address)
-      .then(console.log("successful update"))
-      .catch((error) => console.log(error));
+      .update(newAddress.addressID, newAddress)
+      .then((response) => {
+        setAddresses(
+          addresses.map((address) =>
+          address.addressID !== newAddress.addressID ? address : newAddress
+          )
+        );
+        displayMessage(response, false);
+      })
+      .catch((error) => {
+        displayMessage(error.response.data, true);
+      });
   };
 
   // delete review from row button click
