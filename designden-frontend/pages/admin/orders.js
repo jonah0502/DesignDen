@@ -1,5 +1,8 @@
 import Layout from "@/components/Layout";
 import styles from "@/styles/Table.module.css";
+import ordersService from "../../services/orders.js";
+import { useEffect, useState } from "react";
+
 
 const orderHeaders = [
   "OrderID",
@@ -11,55 +14,23 @@ const orderHeaders = [
   "Email",
 ];
 
-const orders = [
-  {
-    id: 1,
-    userID: 1,
-    addressID: 1,
-    date: new Date(2021, 6, 15).toLocaleDateString(),
-    firstName: "Alice",
-    lastName: "Baker",
-    email: "abaker@example.com",
-  },
-  {
-    id: 2,
-    userID: 1,
-    addressID: 1,
-    date: new Date(2021, 6, 15).toLocaleDateString(),
-    firstName: "Alice",
-    lastName: "Baker",
-    email: "abaker@example.com",
-  },
-  {
-    id: 3,
-    userID: 2,
-    addressID: 2,
-    date: new Date(2021, 6, 17).toLocaleDateString(),
-    firstName: "Bob",
-    lastName: "Smith",
-    email: "bsmith@example.com",
-  },
-  {
-    id: 4,
-    userID: 5,
-    addressID: 3,
-    date: new Date(2021, 6, 17).toLocaleDateString(),
-    firstName: "Eve",
-    lastName: "Walker",
-    email: "ewalker@example.com",
-  },
-  {
-    id: 5,
-    userId: 4,
-    addressID: 4,
-    date: new Date(2021, 6, 18).toLocaleDateString(),
-    firstName: "David",
-    lastName: "Kim",
-    email: "dkim@example.com",
-  },
-];
 
 export default function OrdersPage() {
+  // initalize state variables
+  const [orders, setOrders] = useState([]);
+  const [ordersForm, setOrdersForm] = useState({});
+
+  // get all reviews from database on first page load
+  useEffect(() => {
+    ordersService
+      .getAll()
+      .then((response) => {
+        setOrders(response);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+
   return (
     <Layout>
       <h1>Orders</h1>
@@ -77,7 +48,7 @@ export default function OrdersPage() {
           <tbody>
             {orders.map((order) => {
               return (
-                <tr key={order.id}>
+                <tr key={order.orderID}>
                   {Object.values(order).map((item) => {
                     return <td key={item}>{item}</td>;
                   })}

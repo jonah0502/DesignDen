@@ -34,7 +34,7 @@ const remove = async (id) => {
   
 // create a new order
 const create = async (newAddress) => {
-  const response = await axios.post(`${baseUrl}/addresses`, newAddress);
+  const response = await axios.post(`http://localhost:5000/addresses/`, newAddress);
   return response.data;
 };
 
