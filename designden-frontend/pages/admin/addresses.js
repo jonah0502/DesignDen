@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import styles from "@/styles/Table.module.css";
-import { useState } from "react";
-
+import addressService from "../../services/addresses.js";
+import { useEffect, useState } from "react";
 const addressHeaders = [
   "AddressID",
   "Street",
@@ -12,44 +12,67 @@ const addressHeaders = [
   "Update",
   "Delete",
 ];
-
-const addressData = [
-  {
-    id: 1,
-    street: "1903 Rainbow Road",
-    city: "Los Angeles",
-    zip: "90017",
-    state: "CA",
-    country: "US",
-  },
-  {
-    id: 2,
-    street: "869 Center St",
-    city: "Portland",
-    zip: "97875",
-    state: "OR",
-    country: "US",
-  },
-  {
-    id: 3,
-    street: "2053 Leisure Lane",
-    city: "San Luis Obispo",
-    zip: "93401",
-    state: "CA",
-    country: "US",
-  },
-  {
-    id: 4,
-    street: "3382 Gateway Road",
-    city: "Portland",
-    zip: "97225",
-    state: "OR",
-    country: "US",
-  },
-];
-
 export default function AddressesPage() {
-  const [addresses, setAddresses] = useState(addressData);
+  // initalize state variables
+  const [addresses, setAddresses] = useState([]);
+  const [addressForm, setAddressForm] = useState({});
+
+  // get all reviews from database on first page load
+  useEffect(() => {
+    addressService
+      .getAll()
+      .then((response) => {
+        setAddresses(response);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+
+  //issue lies somewhere in here
+  // add new review to database from button click
+  const addAddress = (event) => {
+    event.preventDefault();
+    let newAddress = { ...addressForm};
+    addressService.create(newAddress).then((response) => {
+      console.log(response)
+      newAddress = { ...newAddress, addressID: response.id};
+      setAddresses(addresses.concat(newAddress));
+      setAddressForm({ });
+      displayMessage(response.message, false);
+    });
+  };
+
+// outputs a success or error message to the screen
+const displayMessage = (text, isError) => {
+  setMessage({ text: text, isError: isError });
+  setTimeout(() => {
+    setMessage({ text: null, isError: false });
+  }, 5000);
+};
+  // update user in database on update button click
+  const updateAddress = (index) => (event) => {
+    event.preventDefault();
+    const address = addresses[index];
+    addressService
+      .update(address.addressID, address)
+      .then(console.log("successful update"))
+      .catch((error) => console.log(error));
+  };
+
+  // delete review from row button click
+  const deleteAddress = (index) => (event) => {
+    event.preventDefault();
+    addressService
+      .remove(addresses[index].addressID)
+      .then(() => {
+        const newAddresses = [...addresses];
+        newAddresses.splice(index, 1);
+        setAddresses(newAddresses);
+      })
+      .catch((e) => console.log(e));
+  };
+
+
 
   const handleRowChange = (index) => (event) => {
     const { name, value } = event.target;
@@ -58,11 +81,6 @@ export default function AddressesPage() {
     setAddresses(newAddresses);
   };
 
-  const handleRowDelete = (index) => (event) => {
-    const newAddresses = [...addresses];
-    newAddresses.splice(index, 1);
-    setAddresses(newAddresses);
-  };
 
   return (
     <Layout>
@@ -80,13 +98,15 @@ export default function AddressesPage() {
           </thead>
           <tbody>
             {addresses.map((address, index) => (
-              <tr key={address.id}>
-                <td>{address.id}</td>
+              <tr key={address.addressID}>
+                <td>
+                  {address.addressID}
+                  </td>
                 <td>
                   <input
                     type="text"
                     name="street"
-                    value={address.street}
+                    value={address.streetAddress}
                     onChange={handleRowChange(index)}
                   />
                 </td>
@@ -125,10 +145,10 @@ export default function AddressesPage() {
                   />
                 </td>
                 <td>
-                  <button>Update</button>
+                  <button onClick={updateAddress(index)}>Update</button>
                 </td>
                 <td>
-                  <button onClick={handleRowDelete(index)}>Delete</button>
+                  <button onClick={deleteAddress(index)}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -139,14 +159,32 @@ export default function AddressesPage() {
       <h3>Add new address</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
-          <input type="text" placeholder="Street" />
-          <input type="text" placeholder="City" />
-          <input type="text" placeholder="Zip" />
-          <input type="text" placeholder="State" maxLength="2" />
-          <input type="text" placeholder="Country" maxLength="2" />
+          <input type="text" placeholder="Street" value={addressForm.streetAddress || ""}
+          onChange={(e) =>
+            setAddressForm({ ...addressForm, streetAddress: e.target.value })
+          }
+          />
+          <input type="text" placeholder="City" value={addressForm.city || ""}
+          onChange={(e) =>
+            setAddressForm({ ...addressForm, city: e.target.value })
+          }
+          />
+          <input type="text" placeholder="Zip" value={addressForm.zip || ""} 
+          onChange={(e) =>
+            setAddressForm({ ...addressForm, zip: e.target.value })
+          }
+          />
+          <input type="text" placeholder="State" maxLength="2" value={addressForm.state || ""} 
+          onChange={(e) =>
+            setAddressForm({ ...addressForm, state: e.target.value })
+          }/>
+          <input type="text" placeholder="Country" maxLength="2" value={addressForm.country || ""} 
+          onChange={(e) =>
+            setAddressForm({ ...addressForm, country: e.target.value })
+          }/>
         </div>
         <div>
-          <button>Add</button>
+          <button onClick={addAddress}>Add</button>
         </div>
       </form>
     </Layout>
