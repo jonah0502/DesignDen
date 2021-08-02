@@ -3,10 +3,10 @@ const axios = require("axios");
 // provides an interface to make requests to the backend
 
 // local
-// const baseUrl = "http://localhost:5000/addresses/";
+ const baseUrl = "http://localhost:5000/addresses/";
 
 // production
-const baseUrl = "https://design-den-backend.herokuapp.com/addresses/";
+//const baseUrl = "https://design-den-backend.herokuapp.com/addresses/";
 
 //read one address
 const getOne = async (id) => {

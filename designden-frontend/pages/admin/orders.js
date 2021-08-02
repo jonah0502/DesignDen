@@ -49,9 +49,13 @@ export default function OrdersPage() {
             {orders.map((order) => {
               return (
                 <tr key={order.orderID}>
-                  {Object.values(order).map((item) => {
-                    return <td key={item}>{item}</td>;
-                  })}
+                  <td>{order.orderID}</td>
+                  <td>{order.userID}</td>
+                  <td>{order.billingAddressID}</td>
+                  <td>{order.orderDate}</td>
+                  <td>{order.firstName}</td>
+                  <td>{order.lastName}</td>
+                  <td>{order.email}</td>
                 </tr>
               );
             })}
@@ -62,7 +66,13 @@ export default function OrdersPage() {
       <h3>Add new order</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
-          <input type="text" placeholder="UserID" />
+          <input type="text" 
+          placeholder="UserID"
+          value={ordersForm.userID || ""}
+          onChange={(e) =>
+            setAddressForm({ ...ordersForm, userID: e.target.value })
+          }
+          />
           <input type="text" placeholder="AddressID" />
           <input type="text" placeholder="ContactFirstName" />
           <input type="text" placeholder="ContactLastName" />
