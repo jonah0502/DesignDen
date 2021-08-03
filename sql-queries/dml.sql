@@ -10,9 +10,14 @@ SELECT * FROM users;
 SELECT * FROM users
 WHERE userID = :userID;
 
+-- insert a user
+INSERT INTO users
+(addressID, firstName, lastName, email, birthDate, storeCredits)
+VALUES (:addressID, :firstName, :lastName, :email, :birthDate, :storeCredits);
+
 -- update a user
 UPDATE users
-SET addressID = :addressID , firstName = :firstName , lastName = :lastName , email = :email , passwordHash = :passwordHash , birthDate = :birthDate , storeCredits = :storeCredits
+SET addressID = :addressID , firstName = :firstName , lastName = :lastName , email = :email , birthDate = :birthDate , storeCredits = :storeCredits
 WHERE userID = :userID;
 
 
@@ -24,6 +29,11 @@ SELECT * FROM reviews;
 -- view reviews for a single product
 SELECT * FROM reviews
 WHERE productID = :productID;
+
+-- insert a review
+INSERT INTO reviews
+(productID, userID, stars, reviewText, datePosted, lastUpdated)
+VALUES (:productID, :userID, :stars, :reviewText, :datePosted, :lastUpdated);
 
 -- update a review
 UPDATE reviews
@@ -39,6 +49,11 @@ WHERE reviewID = :reviewID;
 
 -- view all tags
 SELECT * FROM tags;
+
+-- insert a tag
+INSERT INTO tags
+(tagName)
+VALUES (:tagName);
 
 -- update a tag
 UPDATE tags
@@ -60,6 +75,11 @@ SELECT tags.tagName FROM products_tags
 LEFT JOIN tags ON products_tags.tagID = tags.tagID
 WHERE productID = :productID;
 
+-- insert a tag to a product
+INSERT INTO products_tags
+(productID, tagID)
+VALUES (:productID, :tagID);
+
 -- update a products_tags
 UPDATE products_tags
 SET productID = :newProductID, tagID = :newTagID
@@ -79,6 +99,11 @@ SELECT * FROM users_products;
 SELECT * FROM users_products
 WHERE userID = :userID;
 
+-- insert an item to a users cart
+INSERT INTO users_products
+(userID, productID, quantity)
+VALUES (:userID, :productID, :quantity);
+
 -- update quantity of item in user cart
 UPDATE users_products
 SET userID = :userID, productID = :productID, quantity = :quantity
@@ -94,9 +119,13 @@ WHERE userID = :userID AND productID = :productID;
 SELECT * FROM products
 WHERE productID = :productID;
 
-
 --Read All
 SELECT * from products;
+
+-- insert a product
+INSERT INTO products
+(userID, name, description, price, datePosted, lastUpdated, imageURL)
+VALUES (:userID, :name, :description, :price, :datePosted, :lastUpdated, :imageURL);
 
 --Update
 UPDATE products
@@ -120,6 +149,11 @@ SELECT * FROM orders;
 SELECT * FROM orders
 WHERE userID = :userID;
 
+-- insert an order
+INSERT INTO orders
+(userID, addressID, orderDate, firstName, lastName, email)
+VALUES (:userID, :addressID, :orderDate, :firstName, :lastName, :email);
+
 --Products_Orders
 
 --Read all products from an order
@@ -135,6 +169,11 @@ JOIN products_orders ON products.productID = products_orders.productID
 JOIN orders ON orders.orderID = products_orders.orderID
 WHERE order.userID = :userID;
 
+-- insert a products_orders
+INSERT INTO products_orders
+(orderID, productID, quantity)
+VALUES (:orderID, :productID, :quantity);
+
 --Addresses
 
 -- Read One
@@ -144,6 +183,11 @@ WHERE addressID = :addressID;
 
 --Read All
 SELECT * FROM addresses
+
+-- insert an address
+INSERT INTO addresses
+(streetAddress, city, zip, state, country)
+VALUES (:streetAddress, :city, :zip, :state, :country);
 
 --Update
 UPDATE addresses
