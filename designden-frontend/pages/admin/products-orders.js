@@ -4,44 +4,42 @@ import orderService from "../../services/orders";
 import { useEffect, useState } from "react";
 import Message from "@/components/Message.js";
 
-
-
 const headers = ["OrderID", "ProductID", "Quantity"];
 
 export default function ProductOrdersPage() {
   // initalize state variables
   const [POs, setPOs] = useState([]);
-  const [POForm, setPOForm] = useState({ });
+  const [POForm, setPOForm] = useState({});
   const [message, setMessage] = useState({ text: null, isError: false });
 
- // get all reviews from database on first page load
- useEffect(() => {
-  orderService
-    .getAllPO()
-    .then((response) => {
-      setPOs(response);
-    })
-    .catch((e) => console.log(e));
-}, []);
+  // get all product orders from database on first page load
+  useEffect(() => {
+    orderService
+      .getAllPO()
+      .then((response) => {
+        setPOs(response);
+      })
+      .catch((e) => console.log(e));
+  }, []);
 
-// outputs a success or error message to the screen
-const displayMessage = (text, isError) => {
-  setMessage({ text: text, isError: isError });
-  setTimeout(() => {
-    setMessage({ text: null, isError: false });
-  }, 5000);
-};
+  // outputs a success or error message to the screen
+  const displayMessage = (text, isError) => {
+    setMessage({ text: text, isError: isError });
+    setTimeout(() => {
+      setMessage({ text: null, isError: false });
+    }, 5000);
+  };
 
-  // add new review to database from button click
+  // add new product order to database from button click
   const addPO = (event) => {
     event.preventDefault();
 
     let newPO = { ...POForm };
-    
+
     orderService
       .createPO(newPO)
       .then((response) => {
-        newPO = { ...newPO};
+        newPO = { ...newPO };
         setPOs(POs.concat(newPO));
         setPOForm({});
         displayMessage(response.message, false);
@@ -51,12 +49,12 @@ const displayMessage = (text, isError) => {
         if (error.response) {
           errMsg = error.response.data;
         } else {
-          errMsg = "Error: Unable to add address, missing required fields.";
+          errMsg =
+            "Error: Unable to add product_order, missing required fields.";
         }
         displayMessage(errMsg, true);
       });
   };
-
 
   return (
     <Layout>
@@ -89,25 +87,27 @@ const displayMessage = (text, isError) => {
       <h3>Add a product to an order</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
-          <input type="text" 
-          placeholder="OrderID"
-          value={POForm.orderID || ""}
-          onChange={(e) =>
-            setPOForm({ ...POForm, orderID: e.target.value })
-          } />
-          <input type="text" 
-          placeholder="ProductID"
-          value={POForm.productID || ""}
-          onChange={(e) =>
-            setPOForm({ ...POForm, productID: e.target.value })
-          } />
-          <input type="number" 
-          min="0" 
-          placeholder="Quantity"
-          value={POForm.quantity || ""}
-          onChange={(e) =>
-            setPOForm({ ...POForm, quantity: e.target.value })
-          } />
+          <input
+            type="text"
+            placeholder="OrderID"
+            value={POForm.orderID || ""}
+            onChange={(e) => setPOForm({ ...POForm, orderID: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="ProductID"
+            value={POForm.productID || ""}
+            onChange={(e) =>
+              setPOForm({ ...POForm, productID: e.target.value })
+            }
+          />
+          <input
+            type="number"
+            min="0"
+            placeholder="Quantity"
+            value={POForm.quantity || ""}
+            onChange={(e) => setPOForm({ ...POForm, quantity: e.target.value })}
+          />
         </div>
         <div>
           <button onClick={addPO}>Add</button>

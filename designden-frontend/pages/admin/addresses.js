@@ -19,7 +19,7 @@ export default function AddressesPage() {
   const [addressForm, setAddressForm] = useState({});
   const [message, setMessage] = useState({ text: null, isError: false });
 
-  // get all reviews from database on first page load
+  // get all addresses from database on first page load
   useEffect(() => {
     addressService
       .getAll()
@@ -29,8 +29,7 @@ export default function AddressesPage() {
       .catch((e) => console.log(e));
   }, []);
 
-  //issue lies somewhere in here
-  // add new review to database from button click
+  // add new address to database from button click
   const addAddress = (event) => {
     event.preventDefault();
     let newAddress = { ...addressForm };
@@ -61,7 +60,7 @@ export default function AddressesPage() {
       setMessage({ text: null, isError: false });
     }, 5000);
   };
-  // update user in database on update button click
+  // update address in database on update button click
   const updateAddress = (index) => (event) => {
     event.preventDefault();
     const newAddress = addresses[index];
@@ -70,7 +69,7 @@ export default function AddressesPage() {
       .then((response) => {
         setAddresses(
           addresses.map((address) =>
-          address.addressID !== newAddress.addressID ? address : newAddress
+            address.addressID !== newAddress.addressID ? address : newAddress
           )
         );
         displayMessage(response, false);
@@ -80,7 +79,7 @@ export default function AddressesPage() {
       });
   };
 
-  // delete review from row button click
+  // delete address from row button click
   const deleteAddress = (index) => (event) => {
     event.preventDefault();
     addressService
