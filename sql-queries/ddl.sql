@@ -11,7 +11,6 @@ CREATE TABLE users (
     firstName VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    passwordHash VARCHAR(50) NOT NULL,
     birthDate DATE NOT NULL,
     storeCredits DECIMAL(13, 2) NOT NULL,
     PRIMARY KEY (userID),
@@ -21,13 +20,13 @@ CREATE TABLE users (
 );
 
 INSERT INTO users
-    (addressID, firstName, lastName, email, passwordHash, birthDate, storeCredits)
+    (addressID, firstName, lastName, email, birthDate, storeCredits)
 VALUES
-    (1, "Alice", "Baker", "abaker@example.com", "xxxxxxxxx", "1995-01-12", 100),
-    (2, "Bob", "Smith", "bsmith@exmple.com", "xxxxxxxxx","1990-07-25", 70),
-    (NULL, "Carol", "Henderson", "chenderson@example.com", "xxxxxxxxx","1997-03-15", 0),
-    (NULL, "David", "Kim", "dkim@example.com", "xxxxxxxxx","1987-12-07", 40),
-    (3, "Eve", "Walker", "ewalker@example.com", "xxxxxxxxx","2001-04-20", 2000);
+    (1, "Alice", "Baker", "abaker@example.com", "1995-01-12", 100),
+    (2, "Bob", "Smith", "bsmith@exmple.com", "1990-07-25", 70),
+    (NULL, "Carol", "Henderson", "chenderson@example.com", "1997-03-15", 0),
+    (NULL, "David", "Kim", "dkim@example.com", "1987-12-07", 40),
+    (3, "Eve", "Walker", "ewalker@example.com", "2001-04-20", 2000);
 
 
 -- REVIEWS
@@ -51,11 +50,11 @@ CREATE TABLE reviews (
 INSERT INTO reviews
     (productID, userID, stars, reviewText, datePosted, lastUpdated)
 VALUES
-    (1, 1, 5, "Great product!", "2021-07-15", "2021-07-15"),
-    (1, 4, 4, NULL, "2021-07-17", "2021-07-17"),
-    (2, 2, 5, NULL, "2021-07-15", "2021-07-15"),
-    (3, 5, 6, "I really like this template!", "2021-07-20", "2021-07-20"),
-    (4, 3, 5, NULL, "2021-07-21", "2021-07-21");
+    (1, 1, 4, "Great product!", "2021-07-15", "2021-07-15"),
+    (1, 4, 3, NULL, "2021-07-17", "2021-07-17"),
+    (2, 2, 4, NULL, "2021-07-15", "2021-07-15"),
+    (3, 5, 5, "I really like this template!", "2021-07-20", "2021-07-20"),
+    (4, 3, 4, NULL, "2021-07-21", "2021-07-21");
 
 
 -- TAGS
