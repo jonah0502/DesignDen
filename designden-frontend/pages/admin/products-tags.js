@@ -2,9 +2,11 @@ import Layout from "@/components/Layout";
 import Message from "@/components/Message";
 import styles from "@/styles/Table.module.css";
 import productService from "../../services/products";
+import tagService from "../../services/tags";
+import { getProductList } from "../../services/products";
 import { useEffect, useState } from "react";
 
-const headers = ["ProductID", "TagID", "Delete"];
+const headers = ["ProductID", "Product", "TagID", "Tag", "Delete"];
 
 export default function ProductTagsPage() {
   // initalize state variables
@@ -12,13 +14,28 @@ export default function ProductTagsPage() {
   const [prodInput, setProdInput] = useState("");
   const [tagInput, setTagInput] = useState("");
   const [message, setMessage] = useState({ text: null, isError: false });
+  const [productList, setProductList] = useState([]);
+  const [tagList, setTagList] = useState([]);
 
-  // get all product tags on first page load
   useEffect(() => {
+    // get all product tags on first page load
     productService
       .getAllProductTags()
       .then((response) => {
         setProdTags(response);
+      })
+      .catch((e) => console.log(e));
+    // get list of products for the form
+    getProductList()
+      .then((response) => {
+        setProductList(response);
+      })
+      .catch((e) => console.log(e));
+    // get list of tags for the form
+    tagService
+      .getAll()
+      .then((response) => {
+        setTagList(response);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -34,10 +51,19 @@ export default function ProductTagsPage() {
   // add a new product tag on button click
   const addProductTag = (event) => {
     event.preventDefault();
+    const productID =
+      productList.map((product) => product.name).indexOf(prodInput) + 1;
+    const tagID = tagList.map((tag) => tag.tagName).indexOf(tagInput) + 1;
     productService
-      .createProductTag(prodInput, tagInput)
+      .createProductTag(productID, tagID)
       .then((response) => {
-        setProdTags(prodTags.concat({ productID: prodInput, tagID: tagInput }));
+        const newProductTag = {
+          productID: productID,
+          productName: prodInput,
+          tagID: tagID,
+          tagName: tagInput,
+        };
+        setProdTags(prodTags.concat(newProductTag));
         displayMessage(response, false);
       })
       .catch((error) => {
@@ -98,7 +124,9 @@ export default function ProductTagsPage() {
             {prodTags.map((p, index) => (
               <tr key={`${p.productID}-${p.tagID}`}>
                 <td>{p.productID}</td>
+                <td>{p.productName}</td>
                 <td>{p.tagID}</td>
+                <td>{p.tagName}</td>
                 <td>
                   <button onClick={deleteProductTag(index)}>Delete</button>
                 </td>
@@ -110,18 +138,25 @@ export default function ProductTagsPage() {
       <br />
       <form className={styles.formContainer}>
         <h3>Add a tag to a product</h3>
-        <input
-          type="text"
-          placeholder="ProductID*"
+        <select
           value={prodInput}
-          onChange={handleProdChange}
-        />
-        <input
-          type="text"
-          placeholder="TagID*"
-          value={tagInput}
-          onChange={handleTagChange}
-        />
+          onChange={(e) => setProdInput(e.target.value)}
+        >
+          <option value="">Select product</option>
+          {productList.map((product) => (
+            <option key={product.productID} value={product.name}>
+              {product.name}
+            </option>
+          ))}
+        </select>
+        <select value={tagInput} onChange={(e) => setTagInput(e.target.value)}>
+          <option value="">Select tag</option>
+          {tagList.map((tag) => (
+            <option key={tag.tagID} value={tag.tagName}>
+              {tag.tagName}
+            </option>
+          ))}
+        </select>
         <button onClick={addProductTag}>Add</button>
       </form>
     </Layout>

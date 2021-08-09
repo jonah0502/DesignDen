@@ -2,22 +2,45 @@ import Layout from "@/components/Layout";
 import Message from "@/components/Message.js";
 import styles from "@/styles/Table.module.css";
 import userService from "../../services/users.js";
+import { getUserList } from "../../services/users.js";
+import { getProductList } from "../../services/products.js";
 import { useEffect, useState } from "react";
 
-const cartHeaders = ["UserID", "ProductID", "Quantity", "Delete"];
+const cartHeaders = [
+  "UserID",
+  "User",
+  "ProductID",
+  "Product",
+  "Quantity",
+  "Delete",
+];
 
 export default function UsersProductsPage() {
   // initalize state variables
   const [cartItems, setCartItems] = useState([]);
   const [cartForm, setCartForm] = useState({});
   const [message, setMessage] = useState({ text: null, isError: false });
+  const [userList, setUserList] = useState([]);
+  const [productList, setProductList] = useState([]);
 
-  // get all cartItems from database on first page load
   useEffect(() => {
+    // get all cartItems from database on first page load
     userService
       .getAllCarts()
       .then((response) => setCartItems(response))
       .catch((error) => console.log(error));
+    // get list of users for the form
+    getUserList()
+      .then((response) => {
+        setUserList(response);
+      })
+      .catch((e) => console.log(e));
+    // get list of products for the form
+    getProductList()
+      .then((response) => {
+        setProductList(response);
+      })
+      .catch((e) => console.log(e));
   }, []);
 
   // outputs a success or error message to the screen
@@ -30,11 +53,20 @@ export default function UsersProductsPage() {
 
   const addCartItem = (event) => {
     event.preventDefault();
+    const userID =
+      userList.map((user) => user.name).indexOf(cartForm.userName) + 1;
+    const productID =
+      productList.map((product) => product.name).indexOf(cartForm.productName) +
+      1;
     userService
-      .addToCart(cartForm.userID, cartForm.productID, cartForm.quantity)
+      .addToCart(userID, productID, cartForm.quantity)
       .then((response) => {
-        setCartItems([...cartItems, cartForm]);
-        setCartForm({});
+        const newCartItem = {
+          ...cartForm,
+          userID: userID,
+          productID: productID,
+        };
+        setCartItems([...cartItems, newCartItem]);
         displayMessage(response, false);
       })
       .catch((error) => {
@@ -53,14 +85,18 @@ export default function UsersProductsPage() {
     event.preventDefault();
     userService
       .removeFromCart(cartItems[index].userID, cartItems[index].productID)
-      .then(() => {
+      .then((response) => {
         const newCartItems = [...cartItems];
         newCartItems.splice(index, 1);
         setCartItems(newCartItems);
         displayMessage(response, false);
       })
       .catch((error) => {
-        displayMessage(error.response.data, true);
+        let errMsg;
+        if (error.response) {
+          errMsg = error.response.data;
+          displayMessage(errMsg, true);
+        }
       });
   };
 
@@ -84,7 +120,9 @@ export default function UsersProductsPage() {
             {cartItems.map((item, index) => (
               <tr key={`${item.userID}-${item.productID}`}>
                 <td>{item.userID}</td>
+                <td>{item.userName}</td>
                 <td>{item.productID}</td>
+                <td>{item.productName}</td>
                 <td>{item.quantity}</td>
                 <td>
                   <button onClick={deleteCartItem(index)}>Delete</button>
@@ -98,22 +136,32 @@ export default function UsersProductsPage() {
       <h3>Add new item to cart</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
-          <input
-            type="text"
-            placeholder="UserID*"
-            value={cartForm.userID || ""}
+          <select
+            value={cartForm.userName}
             onChange={(e) =>
-              setCartForm({ ...cartForm, userID: e.target.value })
+              setCartForm({ ...cartForm, userName: e.target.value })
             }
-          />
-          <input
-            type="text"
-            placeholder="ProductID*"
-            value={cartForm.productID || ""}
+          >
+            <option value="">Select user</option>
+            {userList.map((user) => (
+              <option key={user.userID} value={user.name}>
+                {user.name}
+              </option>
+            ))}
+          </select>
+          <select
+            value={cartForm.productName}
             onChange={(e) =>
-              setCartForm({ ...cartForm, productID: e.target.value })
+              setCartForm({ ...cartForm, productName: e.target.value })
             }
-          />
+          >
+            <option value="">Select product</option>
+            {productList.map((product) => (
+              <option key={product.productID} value={product.name}>
+                {product.name}
+              </option>
+            ))}
+          </select>
           <input
             type="number"
             min="0"

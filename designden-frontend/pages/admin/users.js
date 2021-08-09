@@ -2,14 +2,16 @@ import Layout from "@/components/Layout";
 import Message from "@/components/Message.js";
 import styles from "@/styles/Table.module.css";
 import userService from "../../services/users.js";
+import { getAddressList } from "../../services/addresses.js";
 import { useEffect, useState } from "react";
 
 const userHeaders = [
   "UserID",
-  "AddressID",
   "FirstName",
   "LastName",
   "Email",
+  "AddressID",
+  "Address",
   "Birthdate",
   "StoreCredits",
   "Update",
@@ -20,10 +22,13 @@ export default function UsersPage() {
   const [users, setUsers] = useState([]);
   const [userForm, setUserForm] = useState({ addressID: null });
   const [message, setMessage] = useState({ text: null, isError: false });
+  const [addressList, setAddressList] = useState([]);
 
-  // get the users from database on first page load
   useEffect(() => {
+    // get the users from database on first page load
     userService.getAll().then((data) => setUsers(data));
+    // get the addresses for the form
+    getAddressList().then((response) => setAddressList(response));
   }, []);
 
   // outputs a success or error message to the screen
@@ -37,13 +42,19 @@ export default function UsersPage() {
   // add a new user to database on form button click
   const addUser = (event) => {
     event.preventDefault();
-    console.log(userForm);
+    const addressID =
+      addressList
+        .map((address) => address.fullAddress)
+        .indexOf(userForm.fullAddress) + 1;
+    let newUser = { ...userForm };
+    if (addressID) {
+      newUser = { ...userForm, addressID: addressID };
+    }
     userService
-      .create(userForm)
+      .create(newUser)
       .then((response) => {
-        let newUser = { ...userForm, userID: response.id };
+        newUser = { ...newUser, userID: response.id };
         setUsers(users.concat(newUser));
-        setUserForm({ addressID: null });
         displayMessage(response.message, false);
       })
       .catch((error) => {
@@ -77,6 +88,11 @@ export default function UsersPage() {
     const { name, value } = event.target;
     const newUsers = [...users];
     newUsers[index][name] = value;
+    if (name === "fullAddress") {
+      newUsers[index]["addressID"] =
+        addressList.map((address) => address.fullAddress).indexOf(value) + 1 ||
+        null;
+    }
     setUsers(newUsers);
   };
 
@@ -101,15 +117,6 @@ export default function UsersPage() {
                 <td>{user.userID}</td>
                 <td>
                   <input
-                    type="number"
-                    name="addressID"
-                    value={user.addressID || ""}
-                    placeholder="null"
-                    onChange={handleRowChange(index)}
-                  />
-                </td>
-                <td>
-                  <input
                     type="text"
                     name="firstName"
                     value={user.firstName}
@@ -131,6 +138,24 @@ export default function UsersPage() {
                     value={user.email}
                     onChange={handleRowChange(index)}
                   />
+                </td>
+                <td>{user.addressID}</td>
+                <td>
+                  <select
+                    name="fullAddress"
+                    value={user.fullAddress || ""}
+                    onChange={handleRowChange(index)}
+                  >
+                    <option value="">null</option>
+                    {addressList.map((address) => (
+                      <option
+                        key={address.addressID}
+                        value={address.fullAddress}
+                      >
+                        {address.fullAddress}
+                      </option>
+                    ))}
+                  </select>
                 </td>
                 <td>
                   <input
@@ -184,6 +209,19 @@ export default function UsersPage() {
               setUserForm({ ...userForm, email: e.target.value })
             }
           />
+          <select
+            value={userForm.fullAddress || ""}
+            onChange={(e) =>
+              setUserForm({ ...userForm, fullAddress: e.target.value })
+            }
+          >
+            <option value="">Select address</option>
+            {addressList.map((address) => (
+              <option key={address.addressID} value={address.fullAddress}>
+                {address.fullAddress}
+              </option>
+            ))}
+          </select>
           <input
             type="date"
             value={userForm.birthDate || ""}

@@ -2,12 +2,16 @@ import Layout from "@/components/Layout";
 import Message from "@/components/Message.js";
 import styles from "@/styles/Table.module.css";
 import reviewService from "../../services/reviews";
+import { getProductList } from "../../services/products";
+import { getUserList } from "../../services/users";
 import { useEffect, useState } from "react";
 
 const reviewHeaders = [
   "ReviewID",
   "ProductID",
+  "Product",
   "UserID",
+  "User",
   "Stars",
   "Comment",
   "Date",
@@ -21,13 +25,28 @@ export default function ReviewPage() {
   const [reviews, setReviews] = useState([]);
   const [reviewForm, setReviewForm] = useState({ reviewText: null });
   const [message, setMessage] = useState({ text: null, isError: false });
+  const [productList, setProductList] = useState([]);
+  const [userList, setUserList] = useState([]);
 
-  // get all reviews from database on first page load
+  // runs on first page load only
   useEffect(() => {
+    // get all reviews from database
     reviewService
       .getAll()
       .then((response) => {
         setReviews(response);
+      })
+      .catch((e) => console.log(e));
+    // get the list of products for the form
+    getProductList()
+      .then((response) => {
+        setProductList(response);
+      })
+      .catch((e) => console.log(e));
+    // get the list of users for the form
+    getUserList()
+      .then((response) => {
+        setUserList(response);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -44,13 +63,24 @@ export default function ReviewPage() {
   const addReview = (event) => {
     event.preventDefault();
     const today = new Date().toISOString().slice(0, 10);
-    let newReview = { ...reviewForm, datePosted: today, lastUpdated: today };
+    const productID =
+      productList
+        .map((product) => product.name)
+        .indexOf(reviewForm.productName) + 1;
+    const userID =
+      userList.map((user) => user.name).indexOf(reviewForm.userName) + 1;
+    let newReview = {
+      ...reviewForm,
+      productID: productID,
+      userID: userID,
+      datePosted: today,
+      lastUpdated: today,
+    };
     reviewService
       .create(newReview)
       .then((response) => {
         newReview = { ...newReview, reviewID: response.id };
         setReviews(reviews.concat(newReview));
-        setReviewForm({ reviewText: null });
         displayMessage(response.message, false);
       })
       .catch((error) => {
@@ -128,7 +158,9 @@ export default function ReviewPage() {
               <tr key={review.reviewID}>
                 <td>{review.reviewID}</td>
                 <td>{review.productID}</td>
+                <td>{review.productName}</td>
                 <td>{review.userID}</td>
+                <td>{review.userName}</td>
                 <td>
                   <input
                     type="number"
@@ -178,22 +210,33 @@ export default function ReviewPage() {
       <h3>Add new review</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
-          <input
-            type="text"
-            placeholder="ProductID*"
-            value={reviewForm.productID || ""}
+          <select
+            value={reviewForm.productName}
             onChange={(e) =>
-              setReviewForm({ ...reviewForm, productID: e.target.value })
+              setReviewForm({ ...reviewForm, productName: e.target.value })
             }
-          />
-          <input
-            type="text"
-            placeholder="UserID*"
-            value={reviewForm.userID || ""}
+          >
+            <option value="">Select product</option>
+            {productList.map((product) => (
+              <option key={product.productID} value={product.name}>
+                {product.name}
+              </option>
+            ))}
+          </select>
+          <select
+            value={reviewForm.userName}
             onChange={(e) =>
-              setReviewForm({ ...reviewForm, userID: e.target.value })
+              setReviewForm({ ...reviewForm, userName: e.target.value })
             }
-          />
+          >
+            <option value="">Select user</option>
+            {userList.map((user) => (
+              <option key={user.userID} value={user.name}>
+                {user.name}
+              </option>
+            ))}
+          </select>
+          <br />
           <input
             type="number"
             min="0"

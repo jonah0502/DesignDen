@@ -3,7 +3,7 @@ const axios = require("axios");
 // provides an interface to make requests to the backend
 
 // local
- //const baseUrl = "http://localhost:5000/addresses/";
+// const baseUrl = "http://localhost:5000/addresses/";
 
 // production
 const baseUrl = "https://design-den-backend.herokuapp.com/addresses/";
@@ -32,9 +32,15 @@ const remove = async (id) => {
   return response.data;
 };
 
-// create a new order
+// create a new address
 const create = async (newAddress) => {
   const response = await axios.post(baseUrl, newAddress);
+  return response.data;
+};
+
+// get list of addresses
+export const getAddressList = async () => {
+  const response = await axios.get(`${baseUrl}/list`);
   return response.data;
 };
 

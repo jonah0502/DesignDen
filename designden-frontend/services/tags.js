@@ -32,6 +32,12 @@ const remove = async (id) => {
   return response.data;
 };
 
+// get all tags
+export const getTagList = async () => {
+  const response = await axios.get(`${baseUrl}/list`);
+  return response.data;
+};
+
 const tagService = { getAll, create, update, remove };
 
 export default tagService;

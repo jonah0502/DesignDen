@@ -38,7 +38,7 @@ overflow-x: auto;
     margin: 15px;
 }
 
-.formContainer input, .formContainer textarea {
+.formContainer input, .formContainer textarea, .formContainer select {
     margin: 5px;
 }
 

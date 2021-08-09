@@ -1,13 +1,14 @@
 import Layout from "@/components/Layout";
+import Message from "@/components/Message.js";
 import styles from "@/styles/Table.module.css";
 import productsService from "../../services/products.js";
+import { getUserList } from "../../services/users.js";
 import { useEffect, useState } from "react";
-import Message from "@/components/Message.js";
-import { useRouter } from "next/router";
 
 const productHeaders = [
   "ProductID",
   "UserID",
+  "User",
   "Name",
   "Description",
   "Price",
@@ -22,15 +23,20 @@ export default function ProductsPage() {
   const [filter, setFilter] = useState("");
   const [productsForm, setProductsForm] = useState({});
   const [message, setMessage] = useState({ text: null, isError: false });
+  const [userList, setUserList] = useState([]);
 
-  const router = useRouter();
-
-  // get all products from database on first page load
   useEffect(() => {
+    // get all products from database on first page load
     productsService
       .getAll()
       .then((response) => {
         setProducts(response);
+      })
+      .catch((e) => console.log(e));
+    // get a list of users for the form
+    getUserList()
+      .then((response) => {
+        setUserList(response);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -43,12 +49,19 @@ export default function ProductsPage() {
     }, 5000);
   };
 
-  // add new review to database from button click
+  // add new product to database from button click
   const addProduct = (event) => {
     event.preventDefault();
     const today = new Date().toISOString().slice(0, 10);
+    const userID =
+      userList.map((user) => user.name).indexOf(productsForm.userName) + 1;
 
-    let newProduct = { ...productsForm, datePosted: today, lastUpdated: today };
+    let newProduct = {
+      ...productsForm,
+      userID: userID,
+      datePosted: today,
+      lastUpdated: today,
+    };
 
     productsService
       .create(newProduct)
@@ -141,6 +154,7 @@ export default function ProductsPage() {
               <tr key={product.productID}>
                 <td>{product.productID}</td>
                 <td>{product.userID} </td>
+                <td>{product.userName}</td>
                 <td>
                   <input
                     type="text"
@@ -201,14 +215,19 @@ export default function ProductsPage() {
       <h3>Add new product</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
-          <input
-            type="text"
-            placeholder="UserID"
-            value={productsForm.userID || ""}
+          <select
+            value={productsForm.userName}
             onChange={(e) =>
-              setProductsForm({ ...productsForm, userID: e.target.value })
+              setProductsForm({ ...productsForm, userName: e.target.value })
             }
-          />
+          >
+            <option value="">Select user</option>
+            {userList.map((user) => (
+              <option key={user.userID} value={user.name}>
+                {user.name}
+              </option>
+            ))}
+          </select>
           <input
             type="text"
             placeholder="Name"

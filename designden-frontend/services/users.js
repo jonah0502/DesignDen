@@ -55,6 +55,12 @@ const getUserCart = async (userID) => {
   return response.data;
 };
 
+// get list of users for form entry
+export const getUserList = async () => {
+  const response = await axios.get(`${baseUrl}/list`);
+  return response.data;
+};
+
 const userService = {
   getAll,
   create,

@@ -1,52 +1,76 @@
 import Layout from "@/components/Layout";
+import Message from "@/components/Message.js";
 import styles from "@/styles/Table.module.css";
 import ordersService from "../../services/orders.js";
+import { getUserList } from "../../services/users.js";
+import { getAddressList } from "../../services/addresses.js";
 import { useEffect, useState } from "react";
-import Message from "@/components/Message.js";
-
 
 const orderHeaders = [
   "OrderID",
   "UserID",
+  "User",
   "AddressID",
+  "Address",
   "OrderDate",
   "FirstName",
   "LastName",
   "Email",
 ];
 
-
 export default function OrdersPage() {
   // initalize state variables
   const [orders, setOrders] = useState([]);
   const [ordersForm, setOrdersForm] = useState({});
   const [message, setMessage] = useState({ text: null, isError: false });
+  const [userList, setUserList] = useState([]);
+  const [addressList, setAddressList] = useState([]);
 
-  // get all reviews from database on first page load
   useEffect(() => {
+    // get all reviews from database on first page load
     ordersService
       .getAll()
       .then((response) => {
         setOrders(response);
       })
       .catch((e) => console.log(e));
+    // get the list of users for the form
+    getUserList()
+      .then((response) => {
+        setUserList(response);
+      })
+      .catch((e) => console.log(e));
+    // get the list of addresses for the form
+    getAddressList()
+      .then((response) => {
+        setAddressList(response);
+      })
+      .catch((e) => console.log(e));
   }, []);
-
 
   // add new review to database from button click
   const addOrder = (event) => {
     event.preventDefault();
     const today = new Date().toISOString().slice(0, 10);
+    const userID =
+      userList.map((user) => user.name).indexOf(ordersForm.userName) + 1;
+    const addressID = addressList
+      .map((address) => address.fullAddress)
+      .indexOf(ordersForm.fullAddress);
 
-    let newOrder = { ...ordersForm, orderDate: today };
-    
+    let newOrder = {
+      ...ordersForm,
+      userID: userID,
+      billingAddressID: addressID,
+      orderDate: today,
+    };
+
     ordersService
       .create(newOrder)
       .then((response) => {
         console.log(response);
         newOrder = { ...newOrder, orderID: response.id };
         setOrders(orders.concat(newOrder));
-        setOrdersForm({});
         displayMessage(response.message, false);
       })
       .catch((error) => {
@@ -67,7 +91,6 @@ export default function OrdersPage() {
       setMessage({ text: null, isError: false });
     }, 5000);
   };
-
 
   return (
     <Layout>
@@ -90,7 +113,9 @@ export default function OrdersPage() {
                 <tr key={order.orderID}>
                   <td>{order.orderID}</td>
                   <td>{order.userID}</td>
+                  <td>{order.userName}</td>
                   <td>{order.billingAddressID}</td>
+                  <td>{order.fullAddress}</td>
                   <td>{order.orderDate}</td>
                   <td>{order.firstName}</td>
                   <td>{order.lastName}</td>
@@ -105,39 +130,55 @@ export default function OrdersPage() {
       <h3>Add new order</h3>
       <form className={styles.formContainer}>
         <div className={styles.inputContainer}>
-          <input type="text" 
-          placeholder="UserID*"
-          value={ordersForm.userID || ""}
-          onChange={(e) =>
-            setOrdersForm({ ...ordersForm, userID: e.target.value })
-          }
+          <select
+            value={ordersForm.userName}
+            onChange={(e) =>
+              setOrdersForm({ ...ordersForm, userName: e.target.value })
+            }
+          >
+            <option value="">Select user</option>
+            {userList.map((user) => (
+              <option key={user.userID} value={user.name}>
+                {user.name}
+              </option>
+            ))}
+          </select>
+          <select
+            value={ordersForm.fullAddress}
+            onChange={(e) =>
+              setOrdersForm({ ...ordersForm, fullAddress: e.target.value })
+            }
+          >
+            <option value="">Select address</option>
+            {addressList.map((address) => (
+              <option key={address.addressID} value={address.fullAddress}>
+                {address.fullAddress}
+              </option>
+            ))}
+          </select>
+          <input
+            type="text"
+            placeholder="ContactFirstName*"
+            value={ordersForm.firstName || ""}
+            onChange={(e) =>
+              setOrdersForm({ ...ordersForm, firstName: e.target.value })
+            }
           />
-          <input type="text"
-          placeholder="AddressID*"
-          value={ordersForm.billingAddressID || ""}
-          onChange={(e) =>
-            setOrdersForm({ ...ordersForm, billingAddressID: e.target.value })
-          }
-           />
-          <input type="text"
-          placeholder="ContactFirstName*" 
-          value={ordersForm.firstName || ""}
-          onChange={(e) =>
-            setOrdersForm({ ...ordersForm, firstName: e.target.value })
-          }/>
-          <input type="text"
-          placeholder="ContactLastName*" 
-          value={ordersForm.lastName || ""}
-          onChange={(e) =>
-            setOrdersForm({ ...ordersForm, lastName: e.target.value })
-          }
+          <input
+            type="text"
+            placeholder="ContactLastName*"
+            value={ordersForm.lastName || ""}
+            onChange={(e) =>
+              setOrdersForm({ ...ordersForm, lastName: e.target.value })
+            }
           />
-          <input type="text" 
-          placeholder="ContactEmail*"
-          value={ordersForm.email || ""}
-          onChange={(e) =>
-            setOrdersForm({ ...ordersForm, email: e.target.value })
-          }
+          <input
+            type="text"
+            placeholder="ContactEmail*"
+            value={ordersForm.email || ""}
+            onChange={(e) =>
+              setOrdersForm({ ...ordersForm, email: e.target.value })
+            }
           />
         </div>
         <div>
