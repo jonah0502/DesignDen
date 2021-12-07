@@ -1,4 +1,4 @@
-.event {
+.template {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,7 +17,7 @@
   }
   
   @media (max-width: 600px) {
-    .event {
+    .template {
       flex-direction: column;
       text-align: center;
     }

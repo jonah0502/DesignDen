@@ -1,13 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-const {events} = require('./data.json')
+const {templates} = require('./data.json')
 
 export default function handler(req, res) {
-    const evt = events.filter(ev => ev.slug === req.query.slug)
-
-
   if(req.method === 'GET'){
-      res.status(200).json(evt)
+      res.status(200).json(templates)
   }
   else{
     res.setHeader('Allow', ['GET'])

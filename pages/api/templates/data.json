@@ -1,0 +1,59 @@
+{
+  "templates": [
+    {
+      "id": "1",
+      "name": "Cryptocurrency Web App React JS Template",
+      "slug": "cryptocurrency-web-app-react-js-template",
+      "updated": "June 09, 2021",
+      "author": "Person1",
+      "date": "June 09, 2021",
+      "price": 60,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.      ",
+      "image": "/images/sample/template-1.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Custom Interactive Map jQuery Plugin",
+      "slug": "custom-interactive-map-jquery-plugin",
+      "updated": "June 09, 2021",
+      "author": "person2",
+      "date": "June 2, 2021",
+      "price": 30,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.      ",
+      "image": "/images/sample/template-2.jpg"
+    },
+    {
+      "id": "3",
+      "name": "React Personal Portfolio Template + React Hooks",
+      "slug": "react-personal-portfolio-template-react-hooks",
+      "updated": "June 09, 2021",
+      "author": "person3",
+      "date": "June 11, 2021",
+      "price": 50,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.      ",
+      "image": "/images/sample/template-3.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Multipurpose eCommerce WordPress Theme",
+      "slug": "multipurpose-ecommerce-wordpress-theme",
+      "updated": "June 09, 2021",
+      "author": "person4",
+      "date": "June 20, 2021",
+      "price": 22,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.      ",
+      "image": "/images/sample/template-4.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Marketing HTML Landing Page",
+      "slug": "marketing-html-landing-page",
+      "updated": "June 09, 2021",
+      "author": "person5",
+      "date": "June 30, 2021",
+      "price": 47,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.      ",
+      "image": "/images/default_image.jpg"
+    }
+  ]
+}

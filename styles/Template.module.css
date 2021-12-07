@@ -1,13 +1,13 @@
-.event {
+.template {
     position: relative;
     padding-top: 40px;
   }
   
-  .event h3 {
+  .template h3 {
     font-size: 25px;
   }
   
-  .event p {
+  .template p {
     margin: 10px 0;
   }
   
