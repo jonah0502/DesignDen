@@ -1,59 +1,315 @@
 {
-  "templates": [
+  "data": [
     {
-      "id": "1",
-      "name": "Cryptocurrency Web App React JS Template",
-      "slug": "cryptocurrency-web-app-react-js-template",
-      "updated": "June 09, 2021",
-      "author": "Person1",
-      "date": "June 09, 2021",
-      "price": 60,
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.      ",
-      "image": "/images/sample/template-1.jpg"
+      "id": 1,
+      "attributes": {
+        "name": "Cryptocurrency Web App React JS Template",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.\n\n",
+        "price": 60,
+        "posted": "2021-06-07",
+        "lastUpdated": "2021-05-07",
+        "slug": "name-cryptocurrency-web-app-react-js-template",
+        "createdAt": "2021-12-07T01:16:29.785Z",
+        "updatedAt": "2021-12-07T01:24:25.862Z",
+        "publishedAt": "2021-12-07T01:16:31.072Z",
+        "image": {
+          "data": {
+            "id": 2,
+            "attributes": {
+              "name": "event1.jpg",
+              "alternativeText": "event1.jpg",
+              "caption": "event1.jpg",
+              "width": 1920,
+              "height": 1280,
+              "formats": {
+                "thumbnail": {
+                  "name": "thumbnail_event1.jpg",
+                  "hash": "thumbnail_event1_b158dafa9d",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 234,
+                  "height": 156,
+                  "size": 8.68,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638840236/thumbnail_event1_b158dafa9d.jpg",
+                  "provider_metadata": {
+                    "public_id": "thumbnail_event1_b158dafa9d",
+                    "resource_type": "image"
+                  }
+                },
+                "large": {
+                  "name": "large_event1.jpg",
+                  "hash": "large_event1_b158dafa9d",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 1000,
+                  "height": 667,
+                  "size": 83.25,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638840237/large_event1_b158dafa9d.jpg",
+                  "provider_metadata": {
+                    "public_id": "large_event1_b158dafa9d",
+                    "resource_type": "image"
+                  }
+                },
+                "medium": {
+                  "name": "medium_event1.jpg",
+                  "hash": "medium_event1_b158dafa9d",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 750,
+                  "height": 500,
+                  "size": 53.19,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638840238/medium_event1_b158dafa9d.jpg",
+                  "provider_metadata": {
+                    "public_id": "medium_event1_b158dafa9d",
+                    "resource_type": "image"
+                  }
+                },
+                "small": {
+                  "name": "small_event1.jpg",
+                  "hash": "small_event1_b158dafa9d",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 500,
+                  "height": 333,
+                  "size": 28.83,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638840238/small_event1_b158dafa9d.jpg",
+                  "provider_metadata": {
+                    "public_id": "small_event1_b158dafa9d",
+                    "resource_type": "image"
+                  }
+                }
+              },
+              "hash": "event1_b158dafa9d",
+              "ext": ".jpg",
+              "mime": "image/jpeg",
+              "size": 240.29,
+              "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638840235/event1_b158dafa9d.jpg",
+              "previewUrl": null,
+              "provider": "cloudinary",
+              "provider_metadata": {
+                "public_id": "event1_b158dafa9d",
+                "resource_type": "image"
+              },
+              "createdAt": "2021-12-07T01:23:59.067Z",
+              "updatedAt": "2021-12-07T01:23:59.067Z"
+            }
+          }
+        }
+      }
     },
     {
-      "id": "2",
-      "name": "Custom Interactive Map jQuery Plugin",
-      "slug": "custom-interactive-map-jquery-plugin",
-      "updated": "June 09, 2021",
-      "author": "person2",
-      "date": "June 2, 2021",
-      "price": 30,
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.      ",
-      "image": "/images/sample/template-2.jpg"
+      "id": 2,
+      "attributes": {
+        "name": "Custom Interactive Map jQuery Plugin",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.",
+        "price": 30,
+        "posted": "2021-05-31",
+        "lastUpdated": "2021-06-07",
+        "slug": "custom-interactive-map-j-query-plugin",
+        "createdAt": "2021-12-07T01:42:47.756Z",
+        "updatedAt": "2021-12-07T01:43:26.776Z",
+        "publishedAt": "2021-12-07T01:42:48.705Z",
+        "image": {
+          "data": {
+            "id": 3,
+            "attributes": {
+              "name": "event2.jpg",
+              "alternativeText": "event2.jpg",
+              "caption": "event2.jpg",
+              "width": 1920,
+              "height": 1280,
+              "formats": {
+                "thumbnail": {
+                  "name": "thumbnail_event2.jpg",
+                  "hash": "thumbnail_event2_9b2ea988b3",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 234,
+                  "height": 156,
+                  "size": 9.27,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638841254/thumbnail_event2_9b2ea988b3.jpg",
+                  "provider_metadata": {
+                    "public_id": "thumbnail_event2_9b2ea988b3",
+                    "resource_type": "image"
+                  }
+                },
+                "large": {
+                  "name": "large_event2.jpg",
+                  "hash": "large_event2_9b2ea988b3",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 1000,
+                  "height": 667,
+                  "size": 99.82,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638841255/large_event2_9b2ea988b3.jpg",
+                  "provider_metadata": {
+                    "public_id": "large_event2_9b2ea988b3",
+                    "resource_type": "image"
+                  }
+                },
+                "medium": {
+                  "name": "medium_event2.jpg",
+                  "hash": "medium_event2_9b2ea988b3",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 750,
+                  "height": 500,
+                  "size": 60.77,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638841256/medium_event2_9b2ea988b3.jpg",
+                  "provider_metadata": {
+                    "public_id": "medium_event2_9b2ea988b3",
+                    "resource_type": "image"
+                  }
+                },
+                "small": {
+                  "name": "small_event2.jpg",
+                  "hash": "small_event2_9b2ea988b3",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 500,
+                  "height": 333,
+                  "size": 32.03,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638841256/small_event2_9b2ea988b3.jpg",
+                  "provider_metadata": {
+                    "public_id": "small_event2_9b2ea988b3",
+                    "resource_type": "image"
+                  }
+                }
+              },
+              "hash": "event2_9b2ea988b3",
+              "ext": ".jpg",
+              "mime": "image/jpeg",
+              "size": 319.63,
+              "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638841253/event2_9b2ea988b3.jpg",
+              "previewUrl": null,
+              "provider": "cloudinary",
+              "provider_metadata": {
+                "public_id": "event2_9b2ea988b3",
+                "resource_type": "image"
+              },
+              "createdAt": "2021-12-07T01:40:56.963Z",
+              "updatedAt": "2021-12-07T01:40:56.963Z"
+            }
+          }
+        }
+      }
     },
     {
-      "id": "3",
-      "name": "React Personal Portfolio Template + React Hooks",
-      "slug": "react-personal-portfolio-template-react-hooks",
-      "updated": "June 09, 2021",
-      "author": "person3",
-      "date": "June 11, 2021",
-      "price": 50,
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.      ",
-      "image": "/images/sample/template-3.jpg"
-    },
-    {
-      "id": "4",
-      "name": "Multipurpose eCommerce WordPress Theme",
-      "slug": "multipurpose-ecommerce-wordpress-theme",
-      "updated": "June 09, 2021",
-      "author": "person4",
-      "date": "June 20, 2021",
-      "price": 22,
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.      ",
-      "image": "/images/sample/template-4.jpg"
-    },
-    {
-      "id": "5",
-      "name": "Marketing HTML Landing Page",
-      "slug": "marketing-html-landing-page",
-      "updated": "June 09, 2021",
-      "author": "person5",
-      "date": "June 30, 2021",
-      "price": 47,
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.      ",
-      "image": "/images/default_image.jpg"
+      "id": 3,
+      "attributes": {
+        "name": "React Personal Portfolio Template + React Hooks",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra dui leo, id imperdiet eros scelerisque tempor. Etiam vitae magna vitae nulla sagittis fringilla a sed libero. Nunc nisi nulla, egestas ut fermentum placerat, volutpat ac justo. Suspendisse luctus imperdiet purus non tempor. Quisque non erat viverra, consectetur erat et, gravida ex. Phasellus faucibus condimentum purus, posuere iaculis mi convallis at. Sed ornare, justo vel accumsan rhoncus, tortor nulla tincidunt sapien, sed fermentum purus dolor nec enim. Quisque semper sodales sem, ut feugiat dui luctus a. Suspendisse vestibulum iaculis ex. Integer sed molestie eros. In mauris nisl, rhoncus eget elit quis, molestie elementum metus. Nunc tristique ullamcorper lectus, quis scelerisque magna porttitor ac. In condimentum est odio, et posuere erat vestibulum eget.",
+        "price": 50,
+        "posted": "2021-06-08",
+        "lastUpdated": "2021-06-10",
+        "slug": "react-personal-portfolio-template-react-hooks",
+        "createdAt": "2021-12-07T01:49:04.490Z",
+        "updatedAt": "2021-12-07T01:49:05.794Z",
+        "publishedAt": "2021-12-07T01:49:05.791Z",
+        "image": {
+          "data": {
+            "id": 4,
+            "attributes": {
+              "name": "event3.jpg",
+              "alternativeText": "event3.jpg",
+              "caption": "event3.jpg",
+              "width": 1920,
+              "height": 1280,
+              "formats": {
+                "thumbnail": {
+                  "name": "thumbnail_event3.jpg",
+                  "hash": "thumbnail_event3_de7e3b7eb3",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 234,
+                  "height": 156,
+                  "size": 6.41,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638841705/thumbnail_event3_de7e3b7eb3.jpg",
+                  "provider_metadata": {
+                    "public_id": "thumbnail_event3_de7e3b7eb3",
+                    "resource_type": "image"
+                  }
+                },
+                "large": {
+                  "name": "large_event3.jpg",
+                  "hash": "large_event3_de7e3b7eb3",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 1000,
+                  "height": 667,
+                  "size": 71.4,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638841706/large_event3_de7e3b7eb3.jpg",
+                  "provider_metadata": {
+                    "public_id": "large_event3_de7e3b7eb3",
+                    "resource_type": "image"
+                  }
+                },
+                "medium": {
+                  "name": "medium_event3.jpg",
+                  "hash": "medium_event3_de7e3b7eb3",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 750,
+                  "height": 500,
+                  "size": 42.47,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638841707/medium_event3_de7e3b7eb3.jpg",
+                  "provider_metadata": {
+                    "public_id": "medium_event3_de7e3b7eb3",
+                    "resource_type": "image"
+                  }
+                },
+                "small": {
+                  "name": "small_event3.jpg",
+                  "hash": "small_event3_de7e3b7eb3",
+                  "ext": ".jpg",
+                  "mime": "image/jpeg",
+                  "width": 500,
+                  "height": 333,
+                  "size": 21.54,
+                  "path": null,
+                  "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638841707/small_event3_de7e3b7eb3.jpg",
+                  "provider_metadata": {
+                    "public_id": "small_event3_de7e3b7eb3",
+                    "resource_type": "image"
+                  }
+                }
+              },
+              "hash": "event3_de7e3b7eb3",
+              "ext": ".jpg",
+              "mime": "image/jpeg",
+              "size": 277.61,
+              "url": "https://res.cloudinary.com/dpnvrpwpj/image/upload/v1638841704/event3_de7e3b7eb3.jpg",
+              "previewUrl": null,
+              "provider": "cloudinary",
+              "provider_metadata": {
+                "public_id": "event3_de7e3b7eb3",
+                "resource_type": "image"
+              },
+              "createdAt": "2021-12-07T01:48:28.174Z",
+              "updatedAt": "2021-12-07T01:48:28.174Z"
+            }
+          }
+        }
+      }
     }
-  ]
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 3
+    }
+  }
 }

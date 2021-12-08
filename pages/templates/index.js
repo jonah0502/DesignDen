@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Layout from '@/components/Layout'
 import TemplateItem from '@/components/TemplateItem'
+import axios from 'axios';
 
 import Head from 'next/head';
 import { API_URL } from "@/config/index";
@@ -23,8 +24,9 @@ export default function TemplatesPage({templates}) {
 }
 
 export async function getStaticProps(){
-  const res = await fetch(`${API_URL}/api/templates`)
-  const templates = await res.json()
+  const res = await axios.get(`${API_URL}/api/templates?populate=image&populate=author&sort=createdAt:ASC`)
+  const templates = res.data.data;
+  
 
   return{
     props:{templates},

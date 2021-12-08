@@ -3,7 +3,7 @@
 const {templates} = require('./data.json')
 
 export default function handler(req, res) {
-    const tmp = templates.filter(tp => tp.slug === req.query.slug)
+    const tmp = templates.filter(tp => tp.attributes.slug === req.query.slug)
 
 
   if(req.method === 'GET'){

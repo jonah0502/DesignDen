@@ -4,6 +4,8 @@ import Image from 'next/image'
 import {FaPencilAlt, FaTimes} from 'react-icons/fa'
 import styles from '@/styles/Template.module.css'
 import { API_URL } from "@/config/index";
+import axios from 'axios';
+
 export default function TemplatesPage({tmp}) {
   const deleteTemplate = (e) => {
     console.log('object');
@@ -23,20 +25,21 @@ export default function TemplatesPage({tmp}) {
 
           </div>
           <span>
-          {new Date(tmp.date).toLocaleDateString('en-US')} Last Updated {new Date(tmp.updated).toLocaleDateString('en-US')}
+          Created: {new Date(tmp.attributes.createdAt).toLocaleDateString('en-US')} Last Updated: {new Date(tmp.attributes.updatedAt).toLocaleDateString('en-US')}
           </span>
-          <h1>{tmp.name}</h1>
-          {tmp.image &&(
+          <h1>{tmp.attributes.name}</h1>
+          {tmp.attributes.image.data.attributes.formats.medium.url &&(
             <div className={styles.image}>
-              <Image src={tmp.image} width={960} height={600} />
+              < Image src={tmp.attributes.image.data.attributes.formats.medium.url}
+              width={960} height={600} />
             </div>
           )}
-          <h3>Author:</h3>`
-          <p>{tmp.author}</p>
+          <h3>Author:</h3>
+          <p>{tmp.attributes.author.data.attributes.username}</p>
           <h3>Description:</h3>
-          <p>{tmp.description}</p>
+          <p>{tmp.attributes.description}</p>
           <h3>Price:</h3>
-          <p>${tmp.price}</p>`
+          <p>${tmp.attributes.price}</p>
 
           <Link href='/templates'>
           <a className={styles.back}>{'<'} Go Back</a>
@@ -62,10 +65,11 @@ export async function getServerSideProps({query: {slug}}){
 
 
 export async function getStaticPaths(){
-    const res = await fetch(`${API_URL}/api/templates`)
-    const templates = await res.json()
+  const res = await axios.get(`${API_URL}/api/templates?populate=image&populate=author`)
+  const templates = res.data.data;
+
     const paths = templates.map(tmp => ({
-        params: {slug: tmp.slug}
+        params: {slug: tmp.attributes.slug}
     }))
     return{
         paths,
@@ -74,9 +78,11 @@ export async function getStaticPaths(){
 }
 
 export async function getStaticProps({params: {slug}}){
-    const res = await fetch(`${API_URL}/api/templates/${slug}`)
-    const templates = await res.json()
-      
+    const res = await axios.get(`${API_URL}/api/templates?populate=image&populate=author&filters[slug][$eq]=${slug}`)
+    const templates = res.data.data;
+  
+    
+
     return{
       props:{
           tmp: templates[0],
