@@ -30,7 +30,7 @@ export default function HomePage({templates}) {
 }
 
 export async function getStaticProps(){
-  const res = await axios.get(`${API_URL}/api/templates?populate=image&populate=author&sort=createdAt:ASC&pagination[limit]=3`)
+  const res = await axios.get(`${API_URL}/api/templates?populate=*&sort=createdAt:ASC&pagination[limit]=3`)
   const templates = res.data.data;
   
 

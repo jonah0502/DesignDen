@@ -65,7 +65,7 @@ export async function getServerSideProps({query: {slug}}){
 
 
 export async function getStaticPaths(){
-  const res = await axios.get(`${API_URL}/api/templates?populate=image&populate=author`)
+  const res = await axios.get(`${API_URL}/api/templates?populate=*`)
   const templates = res.data.data;
 
     const paths = templates.map(tmp => ({
@@ -78,7 +78,7 @@ export async function getStaticPaths(){
 }
 
 export async function getStaticProps({params: {slug}}){
-    const res = await axios.get(`${API_URL}/api/templates?populate=image&populate=author&filters[slug][$eq]=${slug}`)
+    const res = await axios.get(`${API_URL}/api/templates?populate=*&filters[slug][$eq]=${slug}`)
     const templates = res.data.data;
   
     
