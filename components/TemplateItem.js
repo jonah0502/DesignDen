@@ -2,12 +2,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '@/styles/TemplateItem.module.css'
 export default function TemplateItem({tmp}) {
-    console.log(tmp)
-    console.log(`-----------------------------end ${tmp.id} ---------------------------`);
+    
     return (
         <div className={styles.template}>
             <div className={styles.img}>
-                <Image src={tmp.attributes.image.data.attributes.formats.thumbnail.url ? tmp.attributes.image.data.attributes.formats.thumbnail.url : '/images/event-default.png'}
+                <Image src={tmp.attributes.image.data ? tmp.attributes.image.data.attributes.formats.thumbnail.url : '/images/event-default.png'}
                  width={170}
                  height= {100}
                  />

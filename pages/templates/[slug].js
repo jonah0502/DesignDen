@@ -28,14 +28,12 @@ export default function TemplatesPage({tmp}) {
           Created: {new Date(tmp.attributes.createdAt).toLocaleDateString('en-US')} Last Updated: {new Date(tmp.attributes.updatedAt).toLocaleDateString('en-US')}
           </span>
           <h1>{tmp.attributes.name}</h1>
-          {tmp.attributes.image.data.attributes.formats.medium.url &&(
             <div className={styles.image}>
-              < Image src={tmp.attributes.image.data.attributes.formats.medium.url}
+              < Image src={tmp.attributes.image.data ? tmp.attributes.image.data.attributes.formats.medium.url : '/images/event-default.png'}
               width={960} height={600} />
             </div>
-          )}
           <h3>Author:</h3>
-          <p>{tmp.attributes.author.data.attributes.username}</p>
+          <p>{tmp.attributes.author.data ? tmp.attributes.author.data.attributes.username: null}</p>
           <h3>Description:</h3>
           <p>{tmp.attributes.description}</p>
           <h3>Price:</h3>
@@ -71,6 +69,7 @@ export async function getStaticPaths(){
     const paths = templates.map(tmp => ({
         params: {slug: tmp.attributes.slug}
     }))
+    console.log(paths)
     return{
         paths,
         fallback: true,
