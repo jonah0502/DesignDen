@@ -5,10 +5,27 @@ import {FaPencilAlt, FaTimes} from 'react-icons/fa'
 import styles from '@/styles/Template.module.css'
 import { API_URL } from "@/config/index";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {useRouter} from 'next/router';
 
 export default function TemplatesPage({tmp}) {
-  const deleteTemplate = (e) => {
-    console.log('object');
+  const router = useRouter()
+
+  console.log(tmp)
+  const deleteTemplate = async (e) => {
+    if(confirm('Are you sure?')){
+      const res = await fetch(`${API_URL}/api/templates/${tmp.id}`, {
+        method: 'DELETE',
+      })
+      const data = await res.json()
+
+      if(!res.ok){
+        toast.error(data.message)
+      } else{
+        router.push('/templates')
+      }
+    }
   }
   return (
     <Layout>
@@ -28,6 +45,7 @@ export default function TemplatesPage({tmp}) {
           Created: {new Date(tmp.attributes.createdAt).toLocaleDateString('en-US')} Last Updated: {new Date(tmp.attributes.updatedAt).toLocaleDateString('en-US')}
           </span>
           <h1>{tmp.attributes.name}</h1>
+          <ToastContainer/>
             <div className={styles.image}>
               < Image src={tmp.attributes.image.data ? tmp.attributes.image.data.attributes.formats.medium.url : '/images/event-default.png'}
               width={960} height={600} />
@@ -69,7 +87,7 @@ export async function getStaticPaths(){
     const paths = templates.map(tmp => ({
         params: {slug: tmp.attributes.slug}
     }))
-    console.log(paths)
+    
     return{
         paths,
         fallback: true,
