@@ -19,11 +19,6 @@ export default function ImageUpload({ tmpId, imageUploaded}) {
             body: formData,
           })
 
-          for (var value of formData.values()) {
-            console.log(value);
-         }
-        console.log(res)
-
         if (res.ok) {
           imageUploaded()
         }
